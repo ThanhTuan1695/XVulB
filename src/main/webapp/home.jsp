@@ -1,16 +1,10 @@
 <%@ page language="java" contentType="text/html" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-	<title>Extremely Vulnerable Blog</title>
-</head>
-<body>
-	<h1>Logged-in users - Home page</h1>
+<t:wrapper>
+	<h1>Logged-in users - Home page - <a href="/logout">Logout</a></h1>
 	
 	<h2>List of users</h2>
 
@@ -34,5 +28,4 @@
             </c:forEach>
             
         </table>
-</body>
-</html>
+</t:wrapper>
