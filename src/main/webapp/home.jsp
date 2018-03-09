@@ -4,7 +4,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:wrapper>
-	<h1>Logged-in users - Home page - <a href="/logout">Logout</a></h1>
+	<h1>Logged-in users - Home page - Welcome <b style="color:blue">${username}</b> <a href="/logout">Logout</a></h1>
 	
 	<h2>List of users</h2>
 

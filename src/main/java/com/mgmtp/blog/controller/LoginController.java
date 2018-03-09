@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mgmtp.blog.model.User;
+import com.mgmtp.blog.model.Session;
 import com.mgmtp.blog.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,18 @@ import com.mgmtp.blog.service.SessionService;
 @Controller
 public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String showLoginPage() {
+    public String showLoginPage(HttpServletRequest request) {
+		String existCookie = null;
+        Cookie[] existcookies = request.getCookies();
+        if (existcookies != null) {
+            for (Cookie cookie : existcookies) {
+                if (cookie.getName().equals("SESSIONID"))
+                    existCookie = cookie.getValue();
+            }
+        }
+        if (existCookie != null)
+        		if (!sessionService.findBySessionId(existCookie).isEmpty()) 
+        			return "redirect:/home";
         return "login";
     }
 	
@@ -35,7 +47,9 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String showHomePage(@RequestParam("username") String username, 
-			@RequestParam("password") String password, HttpServletResponse response, HttpSession session, Model model) {
+			@RequestParam("password") String password, HttpServletRequest request, 
+			HttpServletResponse response, HttpSession session, Model model) {
+		
 		
 		boolean isValidUser =  loginService.validateUser(username, password);
 		
@@ -87,8 +101,10 @@ public class LoginController {
             }
         }
         
-        
-        if (sessionService.findBySessionId(loginCookie).isEmpty() || loginCookie == null) return "redirect:/";
+        List<Session> session = sessionService.findBySessionId(loginCookie);
+        if (session.isEmpty() || loginCookie == null) 
+        		return "redirect:/";
+        model.addAttribute("username", session.get(0).getUsername());
         
 		List<User> users = (List<User>) userService.findAll();
         
