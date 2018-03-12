@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mgmtp.blog.service.LoginService;
 import com.mgmtp.blog.service.SessionService;
 
-
+import com.mgmtp.blog.captcha.CaptchaService;
 
 @Controller
 public class LoginController {
@@ -45,12 +45,22 @@ public class LoginController {
 	@Autowired
 	SessionService sessionService;
 	
+	@Autowired
+	CaptchaService captchaService;
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String showHomePage(@RequestParam("username") String username, 
-			@RequestParam("password") String password, HttpServletRequest request, 
+	public String showHomePage(HttpServletRequest request, 
 			HttpServletResponse response, HttpSession session, Model model) {
 		
+		String username = request.getParameter("username");  
+		String password = request.getParameter("password"); 
+		String g_recaptcha_response = request.getParameter("g-recaptcha-response");
 		
+		
+		if(!captchaService.verifyResponse(g_recaptcha_response)) {
+			model.addAttribute("errorMessage", "You're going too fast");
+			return "login";
+		}
 		boolean isValidUser =  loginService.validateUser(username, password);
 		
 		
