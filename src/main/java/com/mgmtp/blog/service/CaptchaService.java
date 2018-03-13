@@ -1,4 +1,4 @@
-package com.mgmtp.blog.captcha;
+package com.mgmtp.blog.service;
 
 
 public interface CaptchaService {

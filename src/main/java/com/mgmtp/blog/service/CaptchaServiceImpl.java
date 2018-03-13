@@ -1,11 +1,12 @@
-package com.mgmtp.blog.captcha;
+package com.mgmtp.blog.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.mgmtp.blog.captcha.CaptchaService;
-import com.mgmtp.blog.captcha.CaptchaSettings;
+import com.mgmtp.blog.service.CaptchaService;
+import com.mgmtp.blog.setting.CaptchaSettings;
+
 import java.util.Map;
 import java.util.HashMap;
 

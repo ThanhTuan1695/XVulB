@@ -1,4 +1,4 @@
-package com.mgmtp.blog.captcha;
+package com.mgmtp.blog.setting;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

@@ -8,19 +8,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.mgmtp.blog.model.User;
 import com.mgmtp.blog.model.Session;
 import com.mgmtp.blog.service.UserService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.mgmtp.blog.service.CaptchaService;
 import com.mgmtp.blog.service.LoginService;
 import com.mgmtp.blog.setting.SecuritySettings;
+import com.mgmtp.blog.service.SessionIdGenerator;
 import com.mgmtp.blog.service.SessionService;
-
-import com.mgmtp.blog.captcha.CaptchaService;
 
 @Controller
 public class LoginController {
@@ -30,7 +29,7 @@ public class LoginController {
         Cookie[] existcookies = request.getCookies();
         if (existcookies != null) {
             for (Cookie cookie : existcookies) {
-                if (cookie.getName().equals("SESSIONID"))
+                if (cookie.getName().equals("JSESSIONID"))
                     existCookie = cookie.getValue();
             }
         }
@@ -67,8 +66,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String showHomePage(HttpServletRequest request, 
-			HttpServletResponse response, HttpSession session, Model model) {
-		
+			HttpServletResponse response, Model model) {
 		String username = request.getParameter("username");  
 		String password = request.getParameter("password"); 
 		String g_recaptcha_response = request.getParameter("g-recaptcha-response");
@@ -96,10 +94,19 @@ public class LoginController {
 			model.addAttribute("errorMessage", "Invalid Credentials");
             return "login";
         }
-		String sessionid = session.getId();
-		Cookie loginCookie = new Cookie("SESSIONID", sessionid);
+		String sessionid = SessionIdGenerator.getSessionId();
+		Cookie loginCookie = new Cookie("JSESSIONID", sessionid);
 		loginCookie.setMaxAge(30*60);
 		response.addCookie(loginCookie);
+		//delete session of Tomcat server
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("JSESSIONID")) {
+                		cookie.setMaxAge(0);
+                }
+            }
+        }
 		sessionService.addSession(username, sessionid);
 		return "redirect:/home";
         
@@ -111,7 +118,7 @@ public class LoginController {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("SESSIONID")) {
+                if (cookie.getName().equals("JSESSIONID")) {
                     loginCookie = cookie;
                     break;
                 }
@@ -134,7 +141,7 @@ public class LoginController {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("SESSIONID"))
+                if (cookie.getName().equals("JSESSIONID"))
                     loginCookie = cookie.getValue();
             }
         }
