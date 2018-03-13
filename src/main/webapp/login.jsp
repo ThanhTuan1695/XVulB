@@ -9,7 +9,10 @@
 	<label>Username:</label><input type="text" name="username" placeholder="username">
 	<br>
 	<label>Password:</label><input type="password" name="password" placeholder="password">
-	<div class="g-recaptcha" data-sitekey="6LefDkwUAAAAAH20_0jZI2JNic67TnXNgXX1Ge75"></div>
+	<c:if test="${isCaptchaEnabled}">
+		<div class="g-recaptcha" data-sitekey="6LefDkwUAAAAAH20_0jZI2JNic67TnXNgXX1Ge75"></div>
+	</c:if>
+	
 	<br>
 	<input type="submit" value="login">
 	<c:if test="${not empty errorMessage}">

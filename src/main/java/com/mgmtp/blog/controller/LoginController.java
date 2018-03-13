@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +13,11 @@ import javax.servlet.http.HttpSession;
 import com.mgmtp.blog.model.User;
 import com.mgmtp.blog.model.Session;
 import com.mgmtp.blog.service.UserService;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.mgmtp.blog.service.LoginService;
+import com.mgmtp.blog.setting.SecuritySettings;
 import com.mgmtp.blog.service.SessionService;
 
 import com.mgmtp.blog.captcha.CaptchaService;
@@ -24,7 +25,7 @@ import com.mgmtp.blog.captcha.CaptchaService;
 @Controller
 public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String showLoginPage(HttpServletRequest request) {
+    public String showLoginPage(Model model, HttpServletRequest request) {
 		String existCookie = null;
         Cookie[] existcookies = request.getCookies();
         if (existcookies != null) {
@@ -36,6 +37,19 @@ public class LoginController {
         if (existCookie != null)
         		if (!sessionService.findBySessionId(existCookie).isEmpty()) 
         			return "redirect:/home";
+        
+		
+		switch (securitySettings.getPwbruteforce()) {
+			case Captcha:
+				model.addAttribute("isCaptchaEnabled", true);					
+				break;
+			case Userlockout:
+				// TODO:
+				break;
+			case False:
+				// TODO:
+				break;
+		}
         return "login";
     }
 	
@@ -48,6 +62,9 @@ public class LoginController {
 	@Autowired
 	CaptchaService captchaService;
 	
+	@Autowired
+	SecuritySettings securitySettings;
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String showHomePage(HttpServletRequest request, 
 			HttpServletResponse response, HttpSession session, Model model) {
@@ -56,11 +73,22 @@ public class LoginController {
 		String password = request.getParameter("password"); 
 		String g_recaptcha_response = request.getParameter("g-recaptcha-response");
 		
-		
-		if(!captchaService.verifyResponse(g_recaptcha_response)) {
-			model.addAttribute("errorMessage", "You're going too fast");
-			return "login";
+		switch (securitySettings.getPwbruteforce()) {
+			case Captcha:
+				model.addAttribute("isCaptchaEnabled", true);
+				if(!captchaService.verifyResponse(g_recaptcha_response)) {
+					model.addAttribute("errorMessage", "You're going too fast");
+					return "login";
+				}
+				break;
+			case Userlockout:
+				// TODO:
+				break;
+			case False:
+				// TODO:
+				break;
 		}
+		
 		boolean isValidUser =  loginService.validateUser(username, password);
 		
 		
