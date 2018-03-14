@@ -85,11 +85,17 @@ public class LoginController {
 				sessionid = sessionService.getRandomSessionId();
 				break;
 			case False:
-				sessionid = request.getSession().getId();
+				Cookie loginCookie =  sessionService.checkLoginCookie(request);
+				if (loginCookie != null) {
+		            sessionid = loginCookie.getValue();
+		        }
+				else {
+					sessionid = sessionService.getRandomSessionId();
+				}
 				break;
 		}
 		
-		Cookie loginCookie = new Cookie("JSESSIONID", sessionid);
+		Cookie loginCookie = new Cookie("SESSIONID", sessionid);
 		loginCookie.setMaxAge(30*60);
 		response.addCookie(loginCookie);
 		sessionService.addSession(username, sessionid);

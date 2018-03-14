@@ -49,7 +49,7 @@ public class SessionServiceImpl implements SessionService {
 		Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("JSESSIONID"))
+                if (cookie.getName().equals("SESSIONID"))
                     loginCookie = cookie;
                 		break;
             }
