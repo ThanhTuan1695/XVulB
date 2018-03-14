@@ -4,21 +4,26 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:wrapper>
-	<h1>Login page</h1>
-	<form action="/login" method="post">
-	<label>Username:</label><input type="text" name="username" placeholder="username">
-	<br>
-	<label>Password:</label><input type="password" name="password" placeholder="password">
-	<c:if test="${isCaptchaEnabled}">
-		<div class="g-recaptcha" data-sitekey="6LefDkwUAAAAAH20_0jZI2JNic67TnXNgXX1Ge75"></div>
-	</c:if>
+	<div class="loginpage text-center">
 	
-	<br>
-	<input type="submit" value="login">
-	<c:if test="${not empty errorMessage}">
-		<p style="color:red">${errorMessage}</p>
-	</c:if>
-	
-	</form>
+		<form class="form-login" action="/login" method="post">
+			<h1 h3 mb-3 font-weight-normal>Please login</h1>
+			<label for="username" class="sr-only">Username</label>
+			<input type="username" name="username" class="form-control" placeholder="username" required>
+			<label for="password" class="sr-only">Password</label>
+			<input type="password" name="password" class="form-control" placeholder="password" required>
+			
+			<c:if test="${isCaptchaEnabled}">
+				<div class="g-recaptcha" data-sitekey="6LefDkwUAAAAAH20_0jZI2JNic67TnXNgXX1Ge75"></div>
+			</c:if>
+			
+			<br>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+			<c:if test="${not empty errorMessage}">
+				<p style="color:red">${errorMessage}</p>
+			</c:if>
+		
+		</form>
+	</div>
 </t:wrapper>
 	
