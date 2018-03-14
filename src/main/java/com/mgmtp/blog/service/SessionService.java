@@ -7,10 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Cookie;
 
 public interface SessionService {
+	
 	List<Session> findByUsername(String username);
+	
 	List<Session> findBySessionId(String sessionid);
+	
 	void delBySessionId(String sessionid);
+	
 	void addSession(String username, String sessionid);
-	void updateSession(String username, String sessionid);
+	
 	Cookie checkLoginCookie(HttpServletRequest request);
+	
+	String getRandomSessionId();
+	
 }

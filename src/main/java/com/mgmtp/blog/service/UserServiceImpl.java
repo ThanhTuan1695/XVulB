@@ -25,7 +25,16 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() {
     		return userRepository.findAll();
     }
-    
-    
+
+	@Override
+	public boolean validateUser(String username, String password) {
+		List<User> users = (List<User>) findByUsername(username);
+		
+		if(users == null || users.isEmpty()) {
+			return false;
+		}
+		
+		return password.equals(users.get(0).getPassword());
+	}
     
 }

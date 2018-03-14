@@ -11,16 +11,13 @@ public class Session {
 
     @Id
     private String username;
-    
     private String sessionid;
 
-    public Session() {
-    }
+    public Session() {}
 
     public Session(String username, String sessionid) {
         this.username = username;
-        this.sessionid = sessionid;
-        
+        this.sessionid = sessionid;     
     }
 
 	public String getUsername() {

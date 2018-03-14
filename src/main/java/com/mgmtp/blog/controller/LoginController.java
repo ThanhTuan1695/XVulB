@@ -8,24 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.mgmtp.blog.model.User;
-import com.mgmtp.blog.model.Session;
-import com.mgmtp.blog.service.UserService;
-
+import com.mgmtp.blog.model.*;
+import com.mgmtp.blog.service.*;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.mgmtp.blog.service.CaptchaService;
-import com.mgmtp.blog.service.LoginService;
 import com.mgmtp.blog.setting.SecuritySettings;
-import com.mgmtp.blog.service.SessionIdGenerator;
-import com.mgmtp.blog.service.SessionService;
 
 @Controller
 public class LoginController {
-	
-	@Autowired
-	LoginService loginService;
 	
 	@Autowired
 	SessionService sessionService;
@@ -43,7 +33,6 @@ public class LoginController {
         if (loginCookie != null)
         		if (!sessionService.findBySessionId(loginCookie.getValue()).isEmpty()) 
         			return "redirect:/home";
-        
 		
 		switch (securitySettings.getPwbruteforce()) {
 			case Captcha:
@@ -82,14 +71,24 @@ public class LoginController {
 				break;
 		}
 		
-		boolean isValidUser =  loginService.validateUser(username, password);
+		boolean isValidUser =  userService.validateUser(username, password);
 		
 		
 		if (!isValidUser) {
 			model.addAttribute("errorMessage", "Invalid Credentials");
             return "login";
         }
-		String sessionid = SessionIdGenerator.getSessionId();
+		
+		String sessionid = "";
+		switch (securitySettings.getSsFixation()) {
+			case True:
+				sessionid = sessionService.getRandomSessionId();
+				break;
+			case False:
+				sessionid = request.getSession().getId();
+				break;
+		}
+		
 		Cookie loginCookie = new Cookie("JSESSIONID", sessionid);
 		loginCookie.setMaxAge(30*60);
 		response.addCookie(loginCookie);
@@ -118,7 +117,6 @@ public class LoginController {
 		System.out.println("TEST: "+loginCookie);
 		List<Session> sessions;
 		if (loginCookie != null) {
-			
 			sessions = sessionService.findBySessionId(loginCookie.getValue());
     			if (!sessions.isEmpty()) {
     				model.addAttribute("username", sessions.get(0).getUsername());	
@@ -127,7 +125,6 @@ public class LoginController {
 	    	        return "home";
     			}
 		}
-		
 		return "redirect:/";
     }
 	
