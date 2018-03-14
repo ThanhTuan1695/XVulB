@@ -4,8 +4,6 @@ import com.mgmtp.blog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -16,11 +14,13 @@ public class UserRepository {
 
     public List<User> findAll() {
 
-        List<User> result = jdbcTemplate.query(
-                "SELECT * FROM Users",
-                (rs, rowNum) -> new User(rs.getLong("id"),
-                        rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname"))
-        );
+        List<User> result = jdbcTemplate.query( "SELECT * FROM Users",
+                									(rs, rowNum) -> new User(rs.getLong("id"), 
+                															rs.getString("username"), 
+                															rs.getString("password"), 
+                															rs.getString("firstname"), 
+                															rs.getString("lastname"))
+        										 );
 
         return result;
 
@@ -28,10 +28,15 @@ public class UserRepository {
     
     public List<User> findByUsername(String username) {
 
-        List<User> result = jdbcTemplate.query("SELECT * FROM Users WHERE username=?", (rs, rowNum) -> new User(rs.getLong("id"),
-                        rs.getString("username"), rs.getString("password"), rs.getString("firstname"), rs.getString("lastname")), username
+        List<User> result = jdbcTemplate.query( "SELECT * FROM Users WHERE username=?", 
+        										   (rs, rowNum) -> new User( rs.getLong("id"),
+        												   					rs.getString("username"), 
+        												   					rs.getString("password"), 
+        												   					rs.getString("firstname"), 
+        												   					rs.getString("lastname")), 
+        										   				   username
                         
-        		);
+        										 );
 
         return result;
 

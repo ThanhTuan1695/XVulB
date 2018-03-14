@@ -18,9 +18,6 @@ import com.mgmtp.blog.setting.SecuritySettings;
 public class LoginController {
 	
 	@Autowired
-	LoginService loginService;
-	
-	@Autowired
 	SessionService sessionService;
 	
 	@Autowired
@@ -36,7 +33,6 @@ public class LoginController {
         if (loginCookie != null)
         		if (!sessionService.findBySessionId(loginCookie.getValue()).isEmpty()) 
         			return "redirect:/home";
-        
 		
 		switch (securitySettings.getPwbruteforce()) {
 			case Captcha:
@@ -75,23 +71,24 @@ public class LoginController {
 				break;
 		}
 		
-		boolean isValidUser =  loginService.validateUser(username, password);
+		boolean isValidUser =  userService.validateUser(username, password);
 		
 		
 		if (!isValidUser) {
 			model.addAttribute("errorMessage", "Invalid Credentials");
             return "login";
         }
+		
 		String sessionid = "";
 		switch (securitySettings.getSsFixation()) {
 			case True:
-				sessionid = SessionIdGenerator.getSessionId();
+				sessionid = sessionService.getRandomSessionId();
 				break;
 			case False:
-				// TODO:
 				sessionid = request.getSession().getId();
 				break;
 		}
+		
 		Cookie loginCookie = new Cookie("JSESSIONID", sessionid);
 		loginCookie.setMaxAge(30*60);
 		response.addCookie(loginCookie);
@@ -117,11 +114,9 @@ public class LoginController {
 	@RequestMapping("/home")
     public String home(Model model, HttpServletRequest request) {
 		Cookie loginCookie = sessionService.checkLoginCookie(request);
-		System.out.println("TEST"+loginCookie);
 		List<Session> sessions;
 		if (loginCookie != null) {
 			sessions = sessionService.findBySessionId(loginCookie.getValue());
-			
     			if (!sessions.isEmpty()) {
     				model.addAttribute("username", sessions.get(0).getUsername());	
 	    			List<User> users = (List<User>) userService.findAll();

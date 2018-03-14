@@ -3,6 +3,8 @@ package com.mgmtp.blog.service;
 import com.mgmtp.blog.dao.SessionRepository;
 import com.mgmtp.blog.model.Session;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -14,6 +16,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SessionServiceImpl implements SessionService {
+	
+	private static final int LENGTH = 32;
+	private static SecureRandom random = new SecureRandom();
 
     @Autowired
     private SessionRepository sessionRepository;
@@ -39,12 +44,6 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public void updateSession(String username, String sessionid) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
 	public Cookie checkLoginCookie(HttpServletRequest request) {
 		Cookie loginCookie = null;
 		Cookie[] cookies = request.getCookies();
@@ -56,6 +55,15 @@ public class SessionServiceImpl implements SessionService {
             }
         }
 		return loginCookie;
+	}
+
+	@Override
+	public String getRandomSessionId() {
+		
+		BigInteger bigInteger = new BigInteger(130, random);
+		String sessionId = String.valueOf(bigInteger.toString(LENGTH));
+		return sessionId.toUpperCase();
+		
 	}
    
     

@@ -10,23 +10,23 @@ import com.mgmtp.blog.setting.SecurityEnum.*;
 @ConfigurationProperties(prefix = "security")
 public class SecuritySettings {
 	
-	private PwBruteForce pwbruteforce;
-	private SessionFixation ssfixation;
+	private PwBruteForce pwBruteForce;
+	private SessionFixation ssFixation;
 
 	public PwBruteForce getPwbruteforce() {
-		return pwbruteforce;
+		return pwBruteForce;
 	}
 
-	public void setPwbruteforce(PwBruteForce pwbruteforce) {
-		this.pwbruteforce = pwbruteforce;
+	public void setPwbruteforce(PwBruteForce pwBruteForce) {
+		this.pwBruteForce = pwBruteForce;
 	}
 
 	public SessionFixation getSsFixation() {
-		return ssfixation;
+		return ssFixation;
 	}
 
-	public void setSsFixation(SessionFixation ssfixation) {
-		this.ssfixation = ssfixation;
+	public void setSsFixation(SessionFixation ssFixation) {
+		this.ssFixation = ssFixation;
 	}
 	
 	
