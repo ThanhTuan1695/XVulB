@@ -5,6 +5,8 @@ import com.mgmtp.blog.model.Session;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,20 @@ public class SessionServiceImpl implements SessionService {
 	public void updateSession(String username, String sessionid) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public Cookie checkLoginCookie(HttpServletRequest request) {
+		Cookie loginCookie = null;
+		Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("JSESSIONID"))
+                    loginCookie = cookie;
+                		break;
+            }
+        }
+		return loginCookie;
 	}
    
     

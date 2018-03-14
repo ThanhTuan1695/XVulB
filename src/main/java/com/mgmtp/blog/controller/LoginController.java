@@ -23,18 +23,25 @@ import com.mgmtp.blog.service.SessionService;
 
 @Controller
 public class LoginController {
+	
+	@Autowired
+	LoginService loginService;
+	
+	@Autowired
+	SessionService sessionService;
+	
+	@Autowired
+	CaptchaService captchaService;
+	
+	@Autowired
+	SecuritySettings securitySettings;
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showLoginPage(Model model, HttpServletRequest request) {
-		String existCookie = null;
-        Cookie[] existcookies = request.getCookies();
-        if (existcookies != null) {
-            for (Cookie cookie : existcookies) {
-                if (cookie.getName().equals("JSESSIONID"))
-                    existCookie = cookie.getValue();
-            }
-        }
-        if (existCookie != null)
-        		if (!sessionService.findBySessionId(existCookie).isEmpty()) 
+		Cookie loginCookie = sessionService.checkLoginCookie(request);
+		
+        if (loginCookie != null)
+        		if (!sessionService.findBySessionId(loginCookie.getValue()).isEmpty()) 
         			return "redirect:/home";
         
 		
@@ -51,18 +58,6 @@ public class LoginController {
 		}
         return "login";
     }
-	
-	@Autowired
-	LoginService loginService;
-	
-	@Autowired
-	SessionService sessionService;
-	
-	@Autowired
-	CaptchaService captchaService;
-	
-	@Autowired
-	SecuritySettings securitySettings;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String showHomePage(HttpServletRequest request, 
@@ -98,15 +93,6 @@ public class LoginController {
 		Cookie loginCookie = new Cookie("JSESSIONID", sessionid);
 		loginCookie.setMaxAge(30*60);
 		response.addCookie(loginCookie);
-		//delete session of Tomcat server
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("JSESSIONID")) {
-                		cookie.setMaxAge(0);
-                }
-            }
-        }
 		sessionService.addSession(username, sessionid);
 		return "redirect:/home";
         
@@ -114,16 +100,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String LogoutPage(HttpServletRequest request, HttpServletResponse response) {
-		Cookie loginCookie = null;
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("JSESSIONID")) {
-                    loginCookie = cookie;
-                    break;
-                }
-            }
-        }
+		Cookie loginCookie =  sessionService.checkLoginCookie(request);
 		if (loginCookie != null) {
             loginCookie.setMaxAge(0);
             response.addCookie(loginCookie);
@@ -137,24 +114,20 @@ public class LoginController {
     UserService userService;
 	@RequestMapping("/home")
     public String home(Model model, HttpServletRequest request) {
-		String loginCookie = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("JSESSIONID"))
-                    loginCookie = cookie.getValue();
-            }
-        }
-        
-        List<Session> session = sessionService.findBySessionId(loginCookie);
-        if (session.isEmpty() || loginCookie == null) 
-        		return "redirect:/";
-        model.addAttribute("username", session.get(0).getUsername());
-        
-		List<User> users = (List<User>) userService.findAll();
-        
-        model.addAttribute("users", users);
-        return "home";
+		Cookie loginCookie = sessionService.checkLoginCookie(request);
+		List<Session> sessions;
+		if (loginCookie != null) {
+			
+			sessions = sessionService.findBySessionId(loginCookie.getValue());
+    			if (!sessions.isEmpty()) {
+    				model.addAttribute("username", sessions.get(0).getUsername());	
+	    			List<User> users = (List<User>) userService.findAll();
+	    			model.addAttribute("users", users);
+	    	        return "home";
+    			}
+		}
+		
+		return "redirect:/";
     }
 	
 }
