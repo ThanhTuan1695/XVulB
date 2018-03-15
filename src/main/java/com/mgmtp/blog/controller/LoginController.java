@@ -120,7 +120,6 @@ public class LoginController {
 	@RequestMapping("/home")
     public String home(Model model, HttpServletRequest request) {
 		Cookie loginCookie = sessionService.checkLoginCookie(request);
-		System.out.println("TEST: "+loginCookie);
 		List<Session> sessions;
 		if (loginCookie != null) {
 			sessions = sessionService.findBySessionId(loginCookie.getValue());
