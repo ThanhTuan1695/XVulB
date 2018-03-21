@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
 <%@ page import="java.util.List"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
@@ -15,10 +17,10 @@
 		  </div>	
 		  <c:forEach items="${posts}" var="post">
 		    <div class="blog-post">
-		      <h2 class="blog-post-title"><c:out value="${post.title}"/></h2>
+		      <h2 class="blog-post-title"><a href="/post?id=<c:out value="${post.id}"/> "><c:out value="${post.title}"/></a></h2>
 		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
 		      <div>
-		      	<c:out value="${post.content}"/> 
+		      	<c:out value="${post.content.substring(0,20)}"/>... 
 		      </div>
 		    </div>
           </c:forEach>
