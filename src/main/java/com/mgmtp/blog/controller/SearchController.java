@@ -20,12 +20,12 @@ public class SearchController {
 	@Autowired
 	PostService postService;
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String showSearchResult(Model model, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String showSearchResult(Model model, HttpServletRequest request, HttpServletResponse response) {
 		String query = request.getParameter("query");
-    		List<PostDTO> posts = (List<PostDTO>) postService.findByTitle(query);
-    		model.addAttribute("searchquery", query);
+	    	List<PostDTO> posts = (List<PostDTO>) postService.findByTitle(query);
+	    	model.addAttribute("searchquery", query);
 		model.addAttribute("posts", posts);
-        return "search";
-    }
+	    return "search";
+	}
 }

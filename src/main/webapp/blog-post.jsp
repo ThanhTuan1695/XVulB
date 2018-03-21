@@ -1,30 +1,32 @@
 <%@ page language="java" contentType="text/html" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-
 <%@ page import="java.util.List"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:wrapper>
-	    <main role="main" class="container">
+	<main role="main" class="container">
       <div class="row">
         <div class="col-md-8 blog-main">
           <h3 class="pb-3 mb-4 font-italic border-bottom">
             Welcome to XVulB
           </h3>
-		  <div class="alert alert-info" role="alert">
-  			Searching result for <strong>${searchquery}</strong> 
-		  </div>	
-		  <c:forEach items="${posts}" var="post">
-		    <div class="blog-post">
-		      <h2 class="blog-post-title"><a href="/post?id=<c:out value="${post.id}"/> "><c:out value="${post.title}"/></a></h2>
-		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
-		      <div>
-		      	<c:out value="${post.content.substring(0,20)}"/>... 
-		      </div>
-		    </div>
-          </c:forEach>
           
+          
+		<c:choose>
+		    <c:when test="${post == null}">
+		        <p> Post's not found </p>
+		    </c:when>    
+		    <c:otherwise>
+		       <div class="blog-post">
+		    		 <h2 class="blog-post-title"><c:out value="${post.title}"/></h2>
+		    		 <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
+		    	   <div>
+		         <c:out value="${post.content}"/>
+		       </div>
+		  </div>
+		    </c:otherwise>
+		</c:choose>
+
           <nav class="blog-pagination">
             <a class="btn btn-outline-primary" href="#">Older</a>
             <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
