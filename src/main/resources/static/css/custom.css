@@ -72,6 +72,14 @@ header {
   margin-bottom: .25rem;
   font-size: 2.5rem;
 }
+.blog-post-title .a{
+  text-decoration:  none !important;
+  color:            black !important;	
+}
+.title {
+  text-decoration:  none !important;
+  color:            black !important;	
+}
 .blog-post-meta {
   margin-bottom: 1.25rem;
   color: #999;

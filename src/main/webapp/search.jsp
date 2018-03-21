@@ -17,7 +17,7 @@
 		  </div>	
 		  <c:forEach items="${posts}" var="post">
 		    <div class="blog-post">
-		      <h2 class="blog-post-title"><a href="/post?id=<c:out value="${post.id}"/> "><c:out value="${post.title}"/></a></h2>
+		      <h2 class="blog-post-title"><a class="title" href="/post?id=<c:out value="${post.id}"/> "><c:out value="${post.title}"/></a></h2>
 		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
 		      <div>
 		      	<c:out value="${post.content.substring(0,20)}"/>... 
