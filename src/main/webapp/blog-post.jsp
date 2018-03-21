@@ -14,7 +14,9 @@
           
 		<c:choose>
 		    <c:when test="${post == null}">
-		        <p> Post's not found </p>
+		        <div class="alert alert-danger" role="alert">
+  					Post is not found 
+		  		</div>	
 		    </c:when>    
 		    <c:otherwise>
 		       <div class="blog-post">

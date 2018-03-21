@@ -33,7 +33,7 @@ public class PostRepository {
 
     }
     
-    public List<Post> findById(int id) {
+    public List<Post> findById(String id) {
 	
 	    List<Post> result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = " + id, 
 	    										   (rs, rowNum) -> new Post(rs.getLong("id"), 
