@@ -8,7 +8,7 @@ public interface PostService {
 	
 	List<PostDTO> findAll();
 	
-	List<PostDTO> findByTitle(String title);
+	List<PostDTO> findByTitle(String title, boolean safe);
 	
 	PostDTO findById(int id);
 	

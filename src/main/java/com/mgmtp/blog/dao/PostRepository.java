@@ -47,11 +47,23 @@ public class PostRepository {
 	
 	}
     
-    public List<Post> findByTitle(String query) {
+    public List<Post> findByTitle(String query, boolean safe) {
+    	
+    		String param = "%"+ query +"%";
+    		List<Post> result;
+    		if(safe) {
+    			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE title LIKE ?", 
+						   (rs, rowNum) -> new Post(rs.getLong("id"), 
+												rs.getString("title"), 
+												rs.getString("created_day"), 
+												rs.getString("content"), 
+												userRepository.findById(rs.getLong("user_id")).get(0)), param
 
-    		String param = "'%"+ query +"%'";
-
-        List<Post> result = jdbcTemplate.query( "SELECT * FROM Posts WHERE title LIKE " + param, 
+						 );
+    			
+    		}
+    		else {
+    			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE title LIKE '" + param + "'", 
         										   (rs, rowNum) -> new Post(rs.getLong("id"), 
 																		rs.getString("title"), 
 																		rs.getString("created_day"), 
@@ -59,7 +71,10 @@ public class PostRepository {
 																		userRepository.findById(rs.getLong("user_id")).get(0))
                         
         										 );
-        return result;
+    			
+    		}
+    		return result;
+        
 
     }
 

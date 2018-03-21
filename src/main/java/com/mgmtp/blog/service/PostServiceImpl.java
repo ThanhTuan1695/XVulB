@@ -18,13 +18,14 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
 
     @Override
-	public List<PostDTO> findByTitle(String title) {
+	public List<PostDTO> findByTitle(String title, boolean safe) {
 		List<PostDTO> result = new ArrayList<>();
-		for (Post item : postRepository.findByTitle(title)) {
+		for (Post item : postRepository.findByTitle(title,safe)) {
 			result.add(PostDTO.fromPostModel(item));
 		}
 		return result;
 	}
+    
     
     @Override
     public List<PostDTO> findAll() {

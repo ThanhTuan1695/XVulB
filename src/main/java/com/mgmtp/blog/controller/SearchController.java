@@ -13,17 +13,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mgmtp.blog.model.PostDTO;
 import com.mgmtp.blog.service.PostService;
+import com.mgmtp.blog.setting.SecuritySettings;
 
 @Controller
 public class SearchController {
 	
 	@Autowired
 	PostService postService;
-
+	@Autowired
+	SecuritySettings securitySettings;
+	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String showSearchResult(Model model, HttpServletRequest request, HttpServletResponse response) {
 		String query = request.getParameter("query");
-	    	List<PostDTO> posts = (List<PostDTO>) postService.findByTitle(query);
+		if(query.length() == 0) return "redirect:/";
+		
+		List<PostDTO> posts;
+		switch (securitySettings.getSqlInjection()) {
+			case True:
+				posts = (List<PostDTO>) postService.findByTitle(query,true);				
+				break;
+			default:
+				posts = (List<PostDTO>) postService.findByTitle(query,false);	
+				
+		}
+    
 	    	model.addAttribute("searchquery", query);
 		model.addAttribute("posts", posts);
 	    return "search";

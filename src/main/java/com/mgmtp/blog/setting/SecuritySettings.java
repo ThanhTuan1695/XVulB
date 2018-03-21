@@ -12,6 +12,15 @@ public class SecuritySettings {
 	
 	private PwBruteForce pwBruteForce;
 	private SessionFixation ssFixation;
+	private SqlInjection sqlInjection;
+	
+	public SqlInjection getSqlInjection() {
+		return sqlInjection;
+	}
+
+	public void setSqlInjection(SqlInjection sqlInjection) {
+		this.sqlInjection = sqlInjection;
+	}
 
 	public PwBruteForce getPwbruteforce() {
 		return pwBruteForce;

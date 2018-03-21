@@ -6,6 +6,8 @@ public class SecurityEnum {
 	
 	public static enum SessionFixation { True, False };
 	
+	public static enum SqlInjection { True, False };
+	
 }
 
 
