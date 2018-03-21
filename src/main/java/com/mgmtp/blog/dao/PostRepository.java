@@ -33,6 +33,20 @@ public class PostRepository {
 
     }
     
+    public List<Post> findById(int id) {
+	
+	    List<Post> result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = " + id, 
+	    										   (rs, rowNum) -> new Post(rs.getLong("id"), 
+																		rs.getString("title"), 
+																		rs.getString("created_day"), 
+																		rs.getString("content"), 
+																		userRepository.findById(rs.getLong("user_id")).get(0))
+	                    
+	    										 );
+	    return result;
+	
+	}
+    
     public List<Post> findByTitle(String query) {
 
     		String param = "'%"+ query +"%'";

@@ -10,6 +10,8 @@ public interface PostService {
 	
 	List<PostDTO> findByTitle(String title);
 	
+	PostDTO findById(int id);
+	
 	boolean addPost(PostDTO post);
 	
 }

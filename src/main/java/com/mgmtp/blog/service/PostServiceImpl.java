@@ -28,7 +28,7 @@ public class PostServiceImpl implements PostService {
     
     @Override
     public List<PostDTO> findAll() {
-    	List<PostDTO> result = new ArrayList<>();
+    		List<PostDTO> result = new ArrayList<>();
 		for (Post item : postRepository.findAll()) {
 			result.add(PostDTO.fromPostModel(item));
 		}
@@ -43,6 +43,15 @@ public class PostServiceImpl implements PostService {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public PostDTO findById(int id) {
+		List<Post> posts = postRepository.findById(id);
+		if(posts.size()==0) {
+			return null;
+		}
+		return PostDTO.fromPostModel(posts.get(0));
 	}
     
 }
