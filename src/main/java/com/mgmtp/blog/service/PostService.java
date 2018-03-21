@@ -1,14 +1,15 @@
 package com.mgmtp.blog.service;
 
-import com.mgmtp.blog.model.Post;
+import com.mgmtp.blog.model.PostDTO;
+
 import java.util.List;
 
 public interface PostService {
 	
-	List<Post> findAll();
+	List<PostDTO> findAll();
 	
-	List<Post> findByTitle(String title);
+	List<PostDTO> findByTitle(String title);
 	
-	boolean addPost(Post post);
+	boolean addPost(PostDTO post);
 	
 }

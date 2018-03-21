@@ -41,6 +41,22 @@ public class UserRepository {
         return result;
 
     }
+    
+    public List<User> findById(Long id) {
+
+    		List<User> result = jdbcTemplate.query( "SELECT * FROM Users WHERE id=?", 
+        										   (rs, rowNum) -> new User( rs.getLong("id"),
+        												   					rs.getString("username"), 
+        												   					rs.getString("password"), 
+        												   					rs.getString("firstname"), 
+        												   					rs.getString("lastname")), 
+        										   				   id
+                        
+        										 );
+        return result;
+
+    }
+
 
 	// Add new user
     public void addUser(Long id, String username, String password, String firstname, String lastname) {

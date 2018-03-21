@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.mgmtp.blog.model.Post;
+import com.mgmtp.blog.model.PostDTO;
 import com.mgmtp.blog.service.PostService;
 
 @Controller
@@ -21,7 +21,7 @@ public class BaseController {
 
     @RequestMapping("/")
     public String showIndex(Model model, HttpServletRequest request, HttpServletResponse response) {
-    		List<Post> posts = (List<Post>) postService.findAll();
+    		List<PostDTO> posts = (List<PostDTO>) postService.findAll();
 		model.addAttribute("posts", posts);
         return "index";
     }

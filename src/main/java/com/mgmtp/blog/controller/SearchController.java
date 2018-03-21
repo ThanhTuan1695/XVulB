@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.mgmtp.blog.model.Post;
+import com.mgmtp.blog.model.PostDTO;
 import com.mgmtp.blog.service.PostService;
 
 @Controller
@@ -23,7 +23,7 @@ public class SearchController {
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String showSearchResult(Model model, HttpServletRequest request, HttpServletResponse response) {
 		String query = request.getParameter("query");
-    		List<Post> posts = (List<Post>) postService.findByTitle(query);
+    		List<PostDTO> posts = (List<PostDTO>) postService.findByTitle(query);
     		model.addAttribute("searchquery", query);
 		model.addAttribute("posts", posts);
         return "search";

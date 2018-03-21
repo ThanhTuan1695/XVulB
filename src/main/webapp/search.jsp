@@ -16,10 +16,9 @@
 		  <c:forEach items="${posts}" var="post">
 		    <div class="blog-post">
 		      <h2 class="blog-post-title"><c:out value="${post.title}"/></h2>
-		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.userId}"/></a></p>
+		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
 		      <div>
-		      	<c:out value="${post.content}"/> <br>
-		      	<c:out value="${post.content}"/>
+		      	<c:out value="${post.content}"/> 
 		      </div>
 		    </div>
           </c:forEach>

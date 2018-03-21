@@ -1,38 +1,27 @@
 package com.mgmtp.blog.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "Posts")
-public class Post {
+public class PostDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
-	@Id
     private Long id;
     private String title;
-    
-    @Column(name="created-day")
     private String createdDay;
     private String content;
-    
-    @ManyToOne()
-    @JoinColumn(name="user_id", nullable= false)
-    private User user;
+    private String createdBy;
 
-    public Post() {
+    public PostDTO() {
     }
 
-    public Post(Long id, String title, String createdDay, String content, User user) {
+    public PostDTO(Long id, String title, String createdDay, String content, String createdBy) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.createdDay = createdDay;
 		this.content = content;
-		this.user = user;
+		this.createdBy = createdBy;
 	}
 
 	public Long getId() {
@@ -67,12 +56,16 @@ public class Post {
 		this.content = content;
 	}
 
-	public User getUser() {
-		return user;
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	
+	public static PostDTO fromPostModel(Post input) {
+		return new PostDTO(input.getId(), input.getTitle(), input.getCreatedDay(), input.getContent(), input.getUser().getUsername());
 	}
     
 }

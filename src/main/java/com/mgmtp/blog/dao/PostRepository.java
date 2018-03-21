@@ -11,17 +11,24 @@ public class PostRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Post> findAll() {
-
-        List<Post> result = jdbcTemplate.query( "SELECT * FROM Posts",
-                									(rs, rowNum) -> new Post(rs.getLong("id"), 
-                															rs.getString("title"), 
-                															rs.getString("created_day"), 
-                															rs.getString("content"), 
-                															rs.getLong("user_id"))
-        										 );
-
+    		List<Post> result;
+    		try {
+    			result = jdbcTemplate.query( "SELECT * FROM Posts",
+						(rs, rowNum) -> new Post(rs.getLong("id"), 
+												rs.getString("title"), 
+												rs.getString("created_day"), 
+												rs.getString("content"), 
+												userRepository.findById(rs.getLong("user_id")).get(0)
+										)
+					 );
+    		} catch (Exception e) {
+    			return null;
+    		}
         return result;
 
     }
@@ -35,10 +42,9 @@ public class PostRepository {
 																		rs.getString("title"), 
 																		rs.getString("created_day"), 
 																		rs.getString("content"), 
-																		rs.getLong("user_id"))
+																		userRepository.findById(rs.getLong("user_id")).get(0))
                         
         										 );
-
         return result;
 
     }
@@ -46,7 +52,7 @@ public class PostRepository {
     public void addPost(Post post) {
 
         jdbcTemplate.update("INSERT INTO Posts(id, title, created_day, content, user_id) VALUES (?,?,?,?,?)",
-                post.getId(), post.getTitle(), post.getCreatedDay(), post.getContent(), post.getUserId());
+                post.getId(), post.getTitle(), post.getCreatedDay(), post.getContent(), post.getUser().getId());
 
     }
 

@@ -1,7 +1,11 @@
 package com.mgmtp.blog.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +19,10 @@ public class User {
     private String password;
     private String firstname;
     private String lastname;
-
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts;
+   
     public User() {
     }
 
@@ -42,8 +49,6 @@ public class User {
     public Long getId() {
         return id;
     }
-    
-    
     
     public void setId(Long id) {
 		this.id = id;
