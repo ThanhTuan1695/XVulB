@@ -26,17 +26,16 @@ public class PostRepository {
 
     }
     
-    public List<Post> findByTitle(String title) {
+    public List<Post> findByTitle(String query) {
 
-    		String param = "%"+ title +"%";
+    		String param = "'%"+ query +"%'";
 
-        List<Post> result = jdbcTemplate.query( "SELECT * FROM Posts WHERE title LIKE ?", 
+        List<Post> result = jdbcTemplate.query( "SELECT * FROM Posts WHERE title LIKE " + param, 
         										   (rs, rowNum) -> new Post(rs.getLong("id"), 
 																		rs.getString("title"), 
 																		rs.getString("created_day"), 
 																		rs.getString("content"), 
-																		rs.getLong("user_id")), 
-        										   				   param
+																		rs.getLong("user_id"))
                         
         										 );
 
