@@ -1,0 +1,30 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_post" author="anhquynhpham" >
+        <createTable tableName="posts" >
+            <column name="id" type="int" autoIncrement="true" >
+            		<constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="title" type="varchar(100)" >
+            		<constraints nullable="false" />
+            </column>
+            <column name="created_day" type="varchar(10)" />
+            <column name="content" type="varchar()" />
+            <column name="user_id" type="int" />
+        </createTable>
+        
+        <sql dbms="postgresql"
+             splitStatements="true"
+             stripComments="true">
+            insert into posts(title, created_day, content, user_id) values ('First blog post', '2018-03-10', 'This is our first demo blog post for XVulB. Welcome to our blog.', 1);
+        </sql>
+    </changeSet>
+    
+    <changeSet id="tag-1.0" author="anhquynhpham" >
+        <tagDatabase tag="1.0" />
+    </changeSet>
+
+</databaseChangeLog>
