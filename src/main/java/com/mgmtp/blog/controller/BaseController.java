@@ -31,9 +31,13 @@ public class BaseController {
     @RequestMapping(value = "/post", method = RequestMethod.GET)
     public String LogoutPage(Model model, HttpServletRequest request) {
     		String query = request.getParameter("id");
+    		
+    		//redirect to index with empty query
     		if(query.length() == 0) return "redirect:/";
     		
     		PostDTO post;
+    		
+    		//check sqlinjection security setting
     		switch (securitySettings.getSqlInjection()) {
 			case True:
 				post = postService.findById(query,true);			

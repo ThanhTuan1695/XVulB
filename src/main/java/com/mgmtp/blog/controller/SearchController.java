@@ -26,9 +26,13 @@ public class SearchController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String showSearchResult(Model model, HttpServletRequest request, HttpServletResponse response) {
 		String query = request.getParameter("query");
+		
+		//redirect to index with empty query
 		if(query.length() == 0) return "redirect:/";
 		
 		List<PostDTO> posts;
+		
+		//check sqlinjection security setting
 		switch (securitySettings.getSqlInjection()) {
 			case True:
 				posts = (List<PostDTO>) postService.findByTitle(query,true);				
