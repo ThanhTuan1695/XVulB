@@ -47,8 +47,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public PostDTO findById(String id) {
-		List<Post> posts = postRepository.findById(id);
+	public PostDTO findById(String id, boolean safe) {
+		List<Post> posts = postRepository.findById(id, safe);
 		if(posts.size()==0) {
 			return null;
 		}

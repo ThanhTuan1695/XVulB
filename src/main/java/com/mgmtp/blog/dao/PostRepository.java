@@ -3,6 +3,8 @@ package com.mgmtp.blog.dao;
 import com.mgmtp.blog.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -33,16 +35,38 @@ public class PostRepository {
 
     }
     
-    public List<Post> findById(String id) {
-	
-	    List<Post> result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = " + id, 
+    public List<Post> findById(String id, boolean safe) {
+    		List<Post> result;
+    		
+    		
+    		if(safe) {
+    			int param;
+        		try {
+        			param = Integer.valueOf(id);
+        		} catch (Exception ignore) {
+        			param = 0;
+        			
+        		}
+    			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = ?", 
 	    										   (rs, rowNum) -> new Post(rs.getLong("id"), 
 																		rs.getString("title"), 
 																		rs.getString("created_day"), 
 																		rs.getString("content"), 
-																		userRepository.findById(rs.getLong("user_id")).get(0))
+																		userRepository.findById(rs.getLong("user_id")).get(0)), param
 	                    
 	    										 );
+    		}
+    		else {
+    			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = " + id, 
+						   (rs, rowNum) -> new Post(rs.getLong("id"), 
+												rs.getString("title"), 
+												rs.getString("created_day"), 
+												rs.getString("content"), 
+												userRepository.findById(rs.getLong("user_id")).get(0))
+
+						 );
+    				
+    		}
 	    return result;
 	
 	}

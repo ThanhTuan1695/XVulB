@@ -20,7 +20,14 @@
 		      <h2 class="blog-post-title"><a class="title" href="/post?id=<c:out value="${post.id}"/> "><c:out value="${post.title}"/></a></h2>
 		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
 		      <div>
-		      	<c:out value="${post.content.substring(0,20)}"/>... 
+		      <c:choose>
+    				<c:when test="${fn:length(post.content) gt 31}">
+		      		<c:out value="${post.content.substring(0,30)}"/>... 
+		      	</c:when>
+		      	<c:otherwise>
+		      		<c:out value="${post.content}"/>
+		      	</c:otherwise>
+		      </c:choose>
 		      </div>
 		    </div>
           </c:forEach>

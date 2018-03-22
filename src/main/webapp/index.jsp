@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page import="java.util.List"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
@@ -20,7 +21,14 @@
 		      </h2>
 		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
 		      <div>
-		      	<c:out value="${post.content}"/>
+		      <c:choose>
+    				<c:when test="${fn:length(post.content) gt 101}">
+		      		<c:out value="${post.content.substring(0,100)}"/>... 
+		      	</c:when>
+		      	<c:otherwise>
+		      		<c:out value="${post.content}"/>
+		      	</c:otherwise>
+		      </c:choose>
 		      </div>
 		    </div>
           </c:forEach>

@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mgmtp.blog.model.PostDTO;
 import com.mgmtp.blog.service.PostService;
+import com.mgmtp.blog.setting.SecuritySettings;
 
 @Controller
 public class BaseController {
 	
 	@Autowired
 	PostService postService;
-
+	@Autowired
+	SecuritySettings securitySettings;
+	
     @RequestMapping("/")
     public String showIndex(Model model) {
     		List<PostDTO> posts = postService.findAll();
@@ -27,8 +30,18 @@ public class BaseController {
     
     @RequestMapping(value = "/post", method = RequestMethod.GET)
     public String LogoutPage(Model model, HttpServletRequest request) {
-    		String query = request.getParameter("id");	
-    		PostDTO post = postService.findById(query);
+    		String query = request.getParameter("id");
+    		if(query.length() == 0) return "redirect:/";
+    		
+    		PostDTO post;
+    		switch (securitySettings.getSqlInjection()) {
+			case True:
+				post = postService.findById(query,true);			
+				break;
+			default:
+				post = postService.findById(query,false);
+				
+		}
 		model.addAttribute("post", post);
 		return "blog-post";
 	}
