@@ -11,6 +11,6 @@ public interface UserService {
 	
 	boolean validateUser(String username, String password);
 	
-	boolean resetUsersTable();
+	boolean resetAllPassword();
 	
 }

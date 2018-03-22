@@ -2,6 +2,8 @@ package com.mgmtp.blog.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
@@ -31,6 +33,19 @@ public class PasswordService {
             sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
         } 
         return sb.toString();
+	}
+
+	public List<String> getInitialPassword() {
+		List<String> result = new ArrayList<>();
+		result.add("admin123");
+		result.add("world");
+		result.add("billionaire");
+		result.add("black");
+		result.add("green");
+		for (int i=0; i<5;i++) {
+			result.add(getRandomString(5));
+		}
+		return result;
 	}
 
 }

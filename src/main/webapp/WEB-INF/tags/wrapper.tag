@@ -47,7 +47,6 @@
 <footer class="footer">
 <div class="container">
     <span class="text-muted">&copy; XVulB 2018</span>
-    <a href="/reset"><span class="text-muted">Reset Users data</span></a>
 </div>
 </footer>
 </body>

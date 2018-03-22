@@ -74,5 +74,13 @@ public class UserRepository {
     		//delete all records and reset id to 1 - n
     		jdbcTemplate.execute("DELETE FROM Users; ALTER SEQUENCE users_id_seq  RESTART WITH 1;"); 
     }
+    
+    public void resetAllPassword(List<String> passwords) {
+		int id = 1; 
+		for(String password: passwords) {
+			jdbcTemplate.update("UPDATE Users SET password = ? WHERE id = ?",
+					password, id++);
+		}
+    }
 
 }

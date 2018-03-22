@@ -50,12 +50,4 @@ public class BaseController {
 		model.addAttribute("post", post);
 		return "blog-post";
 	}
-    
-    @RequestMapping(value = "/reset")
-    public String resetUsers(Model model) {
-    		if(!userService.resetUsersTable()) {
-    			model.addAttribute("error", "Cannot reset database");
-    		}
-    		return "index";
-	}
 }

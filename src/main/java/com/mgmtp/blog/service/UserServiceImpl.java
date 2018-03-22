@@ -2,6 +2,8 @@ package com.mgmtp.blog.service;
 
 import com.mgmtp.blog.dao.UserRepository;
 import com.mgmtp.blog.model.User;
+import com.mgmtp.blog.setting.SecuritySettings;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordService passwordService;
+    
+    @Autowired
+	SecuritySettings securitySettings;
 
     @Override
 	public List<User> findByUsername(String username) {
@@ -36,32 +41,27 @@ public class UserServiceImpl implements UserService {
 		return password.equals(users.get(0).getPassword());
 	}
 
-	public boolean resetUsersTable() {
+	@Override
+	public boolean resetAllPassword() {
 		try {
-			if(!findAll().isEmpty()) {
-				userRepository.deleteAll();
+			switch (securitySettings.getPwStorage()) {
+				case Clear:
+					List<String>passwords = passwordService.getInitialPassword();
+					userRepository.resetAllPassword(passwords);
+					break;
+				case Hashed:
+					// TODO:
+					break;
+				case SaltHashed:
+					// TODO:
+					break;
+				case PBKDF2:
+					break;
 			}
-			List <User> users = get10InitialUsers();
-			userRepository.addListUser(users);
 		} catch (Exception e) {
 			return false;
 		}
 		return true;
-	}
-	
-	private List<User> get10InitialUsers(){
-		List<User> result = new ArrayList<>();
-		result.add(new User("admin","admin123","Bob","Builder"));
-		result.add(new User("spiderman","world","Peter","Parker"));
-		result.add(new User("batman","billionaire","Bruce","Wayne"));
-		result.add(new User("blackwidow","black","Natalia","Romanova"));
-		result.add(new User("hulk","green","Bruce","Banner"));
-		result.add(new User("random1",passwordService.getRandomString(5),"anonymous","Xvulb"));
-		result.add(new User("random2",passwordService.getRandomString(5),"anonymous","Xvulb"));
-		result.add(new User("random3",passwordService.getRandomString(5),"anonymous","Xvulb"));
-		result.add(new User("random4",passwordService.getRandomString(5),"anonymous","Xvulb"));
-		result.add(new User("random5",passwordService.getRandomString(5),"anonymous","Xvulb"));
-		return result;
 	}
     
 }
