@@ -57,14 +57,30 @@ public class UserRepository {
 
     }
 
-
 	// Add new user
-    public void addUser(Long id, String username, String password, String firstname, String lastname) {
-
-        jdbcTemplate.update("INSERT INTO Users(id, username, password, firstname, lastname) VALUES (?,?,?,?,?)",
-                id, username, password, firstname, lastname);
+    public void addUser(User user) {
+        jdbcTemplate.update("INSERT INTO Users(username, password, firstname, lastname) VALUES (?,?,?,?)",
+        		user.getUsername(), user.getPassword(), user.getFirstname(), user.getLastname());
 
     }
-
+    
+    public void addListUser(List<User> users) {
+    		for(User user: users) {
+    			addUser(user);
+    		}
+    }
+    
+    public void deleteAll() {
+    		//delete all records and reset id to 1 - n
+    		jdbcTemplate.execute("DELETE FROM Users; ALTER SEQUENCE users_id_seq  RESTART WITH 1;"); 
+    }
+    
+    public void resetAllPassword(List<String> passwords) {
+		int id = 1; 
+		for(String password: passwords) {
+			jdbcTemplate.update("UPDATE Users SET password = ? WHERE id = ?",
+					password, id++);
+		}
+    }
 
 }

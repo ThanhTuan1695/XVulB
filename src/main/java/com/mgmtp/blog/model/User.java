@@ -26,6 +26,14 @@ public class User {
     public User() {
     }
 
+    public User(String username, String password, String firstname, String lastname) {
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        
+    }
+    
     public User(Long id, String username, String password, String firstname, String lastname) {
         this.id = id;
         this.username = username;
@@ -34,6 +42,7 @@ public class User {
         this.lastname = lastname;
         
     }
+    
     public String getUsername() {
         return username;
     }

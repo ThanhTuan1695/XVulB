@@ -1,0 +1,26 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="insert_users" author="anhquynhpham" >
+        <sql dbms="postgresql"
+             splitStatements="true"
+             stripComments="true">
+            insert into users(username, password, firstname, lastname) values ('spiderman', '', 'Peter','Parker');
+            insert into users(username, password, firstname, lastname) values ('batman', '', 'Bruce','Wayne');
+            insert into users(username, password, firstname, lastname) values ('blackwidow', '', 'Natalia','Romanova');
+            insert into users(username, password, firstname, lastname) values ('hulk', '', 'Bruce','Banner');
+            insert into users(username, password, firstname, lastname) values ('random1', '', 'anonymous','xvulb');
+            insert into users(username, password, firstname, lastname) values ('random2', '', 'anonymous','xvulb');
+            insert into users(username, password, firstname, lastname) values ('random3', '', 'anonymous','xvulb');
+            insert into users(username, password, firstname, lastname) values ('random4', '', 'anonymous','xvulb');
+            insert into users(username, password, firstname, lastname) values ('random5', '', 'anonymous','xvulb');
+        </sql>
+    </changeSet>
+
+    <changeSet id="tag-1.0" author="anhquynhpham" >
+        <tagDatabase tag="1.0" />
+    </changeSet>
+
+</databaseChangeLog>

@@ -46,7 +46,7 @@
 	
 <footer class="footer">
 <div class="container">
-        <span class="text-muted">&copy; XVulB 2018</span>
+    <span class="text-muted">&copy; XVulB 2018</span>
 </div>
 </footer>
 </body>
