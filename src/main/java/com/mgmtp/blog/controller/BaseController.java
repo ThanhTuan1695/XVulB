@@ -12,15 +12,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mgmtp.blog.model.PostDTO;
 import com.mgmtp.blog.service.PostService;
 import com.mgmtp.blog.setting.SecuritySettings;
+import com.mgmtp.blog.service.UserService;
 
 @Controller
 public class BaseController {
 	
 	@Autowired
 	PostService postService;
+	
 	@Autowired
 	SecuritySettings securitySettings;
 	
+	@Autowired
+	UserService userService;
+
     @RequestMapping("/")
     public String showIndex(Model model) {
     		List<PostDTO> posts = postService.findAll();
@@ -29,7 +34,7 @@ public class BaseController {
     }
     
     @RequestMapping(value = "/post", method = RequestMethod.GET)
-    public String LogoutPage(Model model, HttpServletRequest request) {
+    public String getPostDetail(Model model, HttpServletRequest request) {
     		String query = request.getParameter("id");
     		if(query.length() == 0) return "redirect:/";
     		
@@ -44,5 +49,13 @@ public class BaseController {
 		}
 		model.addAttribute("post", post);
 		return "blog-post";
+	}
+    
+    @RequestMapping(value = "/reset")
+    public String resetUsers(Model model) {
+    		if(!userService.resetUsersTable()) {
+    			model.addAttribute("error", "Cannot reset database");
+    		}
+    		return "index";
 	}
 }

@@ -8,6 +8,8 @@ public class SecurityEnum {
 	
 	public static enum SqlInjection { True, False };
 	
+	public static enum PasswordStorage { Clear, Hashed, SaltHashed, PBKDF2 };
+	
 }
 
 

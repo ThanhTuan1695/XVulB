@@ -13,7 +13,8 @@ public class SecuritySettings {
 	private PwBruteForce pwBruteForce;
 	private SessionFixation ssFixation;
 	private SqlInjection sqlInjection;
-	
+	private PasswordStorage pwStorage;
+
 	public SqlInjection getSqlInjection() {
 		return sqlInjection;
 	}
@@ -37,7 +38,14 @@ public class SecuritySettings {
 	public void setSsFixation(SessionFixation ssFixation) {
 		this.ssFixation = ssFixation;
 	}
-	
+
+	public PasswordStorage getPwStorage() {
+		return pwStorage;
+	}
+
+	public void setPwStorage(PasswordStorage pwStorage) {
+		this.pwStorage = pwStorage;
+	}
 	
 }
 
