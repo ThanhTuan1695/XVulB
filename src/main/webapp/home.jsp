@@ -5,7 +5,7 @@
 
 <t:wrapper>
 
-<div class="container panel">
+<div class="container">
 <div class="row">
 <h3 class="pb-3 mb-4 font-italic border-bottom">Welcome, <b style="color:blue">${username}</b> <a href="/logout">Logout</a></h3>
 </div>
@@ -60,7 +60,8 @@
 	</div>
   </div>
  </div> 
-<div class="container">
+<br>
+<div class="container panel">
 <div class="row">
 <h3 class="pb-3 mb-4 font-italic border-bottom">List of users</h3>
 </div>
