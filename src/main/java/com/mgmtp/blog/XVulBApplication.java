@@ -9,5 +9,6 @@ public class XVulBApplication {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(XVulBApplication.class, args);
+		
 	}
 }

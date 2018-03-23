@@ -19,6 +19,7 @@ public class User {
     private String password;
     private String firstname;
     private String lastname;
+    private String salt;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
@@ -26,21 +27,21 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String firstname, String lastname) {
-        this.username = username;
+    public User(Long id, String username, String password, String firstname, String lastname) {
+    		this.id = id;
+    		this.username = username;
         this.password = password;
         this.firstname = firstname;
-        this.lastname = lastname;
-        
+        this.lastname = lastname;   
     }
     
-    public User(Long id, String username, String password, String firstname, String lastname) {
+    public User(Long id, String username, String password, String firstname, String lastname, String salt) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
-        
+        this.salt = salt;
     }
     
     public String getUsername() {
@@ -86,4 +87,12 @@ public class User {
                 + ", lastname=" + lastname
                 + '}';
     }
+
+	public String getSalt() {	
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
 }

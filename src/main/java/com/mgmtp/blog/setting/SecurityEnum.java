@@ -10,6 +10,8 @@ public class SecurityEnum {
 	
 	public static enum PasswordStorage { Clear, Hashed, SaltHashed, PBKDF2 };
 	
+	public static enum ResetPassword { True, False };
+	
 }
 
 

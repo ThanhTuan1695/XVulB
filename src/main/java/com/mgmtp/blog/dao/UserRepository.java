@@ -82,5 +82,13 @@ public class UserRepository {
 					password, id++);
 		}
     }
+    
+    public void updateSaltColumn(List<String> salts) {
+		int id = 1; 
+		for(String salt: salts) {
+			jdbcTemplate.update("UPDATE Users SET salt = ? WHERE id = ?",
+					salt, id++);
+		}
+    }
 
 }
