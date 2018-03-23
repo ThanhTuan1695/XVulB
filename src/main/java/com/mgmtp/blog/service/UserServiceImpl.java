@@ -60,11 +60,11 @@ public class UserServiceImpl implements UserService {
 				password = passwordService.sha256(users.get(0).getSalt() + password);
 				break;
 			case PBKDF2:
+				password = passwordService.pbkdf2(password, users.get(0).getSalt());
 				break;
 			}
 		} catch (Exception e) {
 		}
-		
 		return password.equals(users.get(0).getPassword());
 		
 	}
