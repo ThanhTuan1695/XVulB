@@ -13,39 +13,47 @@ public class UserRepository {
     private JdbcTemplate jdbcTemplate;
 
     public List<User> findAll() {
-
-        List<User> result = jdbcTemplate.query( "SELECT * FROM Users",
-                									(rs, rowNum) -> new User(rs.getLong("id"), 
-                															rs.getString("username"), 
-                															rs.getString("password"), 
-                															rs.getString("firstname"), 
-                															rs.getString("lastname"),
-                															rs.getString("salt"))
-        										 );
-
-        return result;
-
+    		try {
+    			List<User> result = jdbcTemplate.query( "SELECT * FROM Users",
+						(rs, rowNum) -> new User(rs.getLong("id"), 
+												rs.getString("username"), 
+												rs.getString("password"), 
+												rs.getString("firstname"), 
+												rs.getString("lastname"),
+												rs.getString("salt"))
+					 );
+    			return result;
+    		} catch (Exception e) {
+    			e.getStackTrace();
+    		}
+        return null;
     }
     
     public List<User> findByUsername(String username) {
+    		try {
+    			List<User> result = jdbcTemplate.query( "SELECT * FROM Users WHERE username=?", 
+						   (rs, rowNum) -> new User( rs.getLong("id"),
+								   					rs.getString("username"), 
+								   					rs.getString("password"), 
+								   					rs.getString("firstname"), 
+								   					rs.getString("lastname"),
+								   					rs.getString("salt")), 
+						   				   username
+						 );
 
-        List<User> result = jdbcTemplate.query( "SELECT * FROM Users WHERE username=?", 
-        										   (rs, rowNum) -> new User( rs.getLong("id"),
-        												   					rs.getString("username"), 
-        												   					rs.getString("password"), 
-        												   					rs.getString("firstname"), 
-        												   					rs.getString("lastname"),
-        												   					rs.getString("salt")), 
-        										   				   username
-                        
-        										 );
-
-        return result;
-
+    			return result;
+    		} catch(Exception e) {
+    			e.printStackTrace();
+    		}
+        return null;
     }
     
     public List<User> findById(Long id) {
-
+    		try {
+    			
+    		} catch (Exception e) {
+    			
+    		}
     		List<User> result = jdbcTemplate.query( "SELECT * FROM Users WHERE id=?", 
         										   (rs, rowNum) -> new User( rs.getLong("id"),
         												   					rs.getString("username"), 
@@ -61,35 +69,54 @@ public class UserRepository {
 
 	// Add new user
     public void addUser(User user) {
-        jdbcTemplate.update("INSERT INTO Users(username, password, firstname, lastname) VALUES (?,?,?,?)",
-        		user.getUsername(), user.getPassword(), user.getFirstname(), user.getLastname());
-
+    		try {
+    			jdbcTemplate.update("INSERT INTO Users(username, password, firstname, lastname) VALUES (?,?,?,?)",
+    	        		user.getUsername(), user.getPassword(), user.getFirstname(), user.getLastname());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
     
     public void addListUser(List<User> users) {
-    		for(User user: users) {
-    			addUser(user);
-    		}
+    		try {
+    			for(User user: users) {
+        			addUser(user);
+        		}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}	
     }
     
     public void deleteAll() {
     		//delete all records and reset id to 1 - n
-    		jdbcTemplate.execute("DELETE FROM Users; ALTER SEQUENCE users_id_seq  RESTART WITH 1;"); 
-    }
+    		try {
+    			jdbcTemplate.execute("DELETE FROM Users; ALTER SEQUENCE users_id_seq  RESTART WITH 1;"); 
+		} catch (Exception e) {
+			e.getStackTrace();
+		}	
+    	}
     
     public void resetAllPassword(List<String> passwords) {
-		int id = 1; 
-		for(String password: passwords) {
-			jdbcTemplate.update("UPDATE Users SET password = ? WHERE id = ?",
-					password, id++);
+    		try {
+    			int id = 1; 
+    			for(String password: passwords) {
+    				jdbcTemplate.update("UPDATE Users SET password = ? WHERE id = ?",
+    						password, id++);
+    			}
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
     }
     
     public void updateSaltColumn(List<String> salts) {
-		int id = 1; 
-		for(String salt: salts) {
-			jdbcTemplate.update("UPDATE Users SET salt = ? WHERE id = ?",
-					salt, id++);
+    		try {
+    			int id = 1; 
+    			for(String salt: salts) {
+    				jdbcTemplate.update("UPDATE Users SET salt = ? WHERE id = ?",
+    						salt, id++);
+    			}
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
     }
 

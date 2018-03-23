@@ -13,30 +13,44 @@ public class SessionRepository {
     private JdbcTemplate jdbcTemplate;
     
     public List<Session> findByUsername(String username) {
-
-        List<Session> result = jdbcTemplate.query(
-        		"SELECT * FROM Sessions WHERE username=?", 
-        		(rs, rowNum) -> new Session(rs.getString("username"), rs.getString("sessionid")), username);
-        return result;
-
+    		try {
+    			List<Session> result = jdbcTemplate.query(
+    	        		"SELECT * FROM Sessions WHERE username=?", 
+    	        		(rs, rowNum) -> new Session(rs.getString("username"), rs.getString("sessionid")), username);
+    			return result;
+    		} catch (Exception e) {
+    			e.getStackTrace();
+    		}
+    		return null;
     }
     
     public List<Session> findBySessionId(String sessionid) {
-
-        List<Session> result = jdbcTemplate.query(
-        		"SELECT * FROM Sessions WHERE sessionid=?", 
-        		(rs, rowNum) -> new Session(rs.getString("username"), rs.getString("sessionid")), sessionid);
-        return result;
-
+    		try {
+    			List<Session> result = jdbcTemplate.query(
+    	        		"SELECT * FROM Sessions WHERE sessionid=?", 
+    	        		(rs, rowNum) -> new Session(rs.getString("username"), rs.getString("sessionid")), sessionid);
+    	        return result;
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+        return null;
     }
     
     public void delBySessionId(String sessionid) {
-        jdbcTemplate.update("DELETE FROM Sessions WHERE sessionid=?", sessionid);
+    		try {
+    			jdbcTemplate.update("DELETE FROM Sessions WHERE sessionid=?", sessionid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}    
     }
 
 	// Add new session
     public void addSession(String username, String sessionid) {
-        jdbcTemplate.update("INSERT INTO sessions(username, sessionid) VALUES (?,?)", username, sessionid);
-    }
+    		try {
+    			jdbcTemplate.update("INSERT INTO sessions(username, sessionid) VALUES (?,?)", username, sessionid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	}
 
 }

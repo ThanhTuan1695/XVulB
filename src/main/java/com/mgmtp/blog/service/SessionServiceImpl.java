@@ -2,14 +2,13 @@ package com.mgmtp.blog.service;
 
 import com.mgmtp.blog.dao.SessionRepository;
 import com.mgmtp.blog.model.Session;
-
-import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class SessionServiceImpl implements SessionService {
 	
 	private static final int LENGTH = 32;
-	private static SecureRandom random = new SecureRandom();
+	private static SecureRandom RANDOM = new SecureRandom();
 
     @Autowired
     private SessionRepository sessionRepository;
@@ -59,11 +58,14 @@ public class SessionServiceImpl implements SessionService {
 
 	@Override
 	public String getRandomSessionId() {
-		
-		BigInteger bigInteger = new BigInteger(130, random);
-		String sessionId = String.valueOf(bigInteger.toString(LENGTH));
-		return sessionId.toUpperCase();
-		
+		try {
+			byte[]  resBuf = new byte[LENGTH];
+			RANDOM.nextBytes(resBuf);
+			return Hex.encodeHexString(resBuf);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
    
     
