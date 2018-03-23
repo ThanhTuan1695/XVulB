@@ -20,7 +20,7 @@ public class PasswordServiceImpl implements PasswordService{
 	// The following constants may be changed without breaking existing hashes.
     
     public static final int PBKDF2_ITERATIONS = 1000;
-    public static final int KEY_LENGTH = 512;
+    public static final int KEY_LENGTH = 256;
 	
 	//get random password with only lower-case letters
 	public String getRandomString(int length) {
@@ -64,7 +64,7 @@ public class PasswordServiceImpl implements PasswordService{
 	
 	public String pbkdf2 (String password, String salt) {
         try {
-            SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA512" );
+            SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA1" );
             char[] pass = password.toCharArray();
             PBEKeySpec spec = new PBEKeySpec(pass, salt.getBytes(), PBKDF2_ITERATIONS, KEY_LENGTH );
             SecretKey key = skf.generateSecret( spec );

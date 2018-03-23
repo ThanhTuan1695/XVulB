@@ -103,6 +103,7 @@ public class UserServiceImpl implements UserService {
 					for(String item: passwords) {
 						saltItem = passwordService.getRandomString(SALT_BYTES);
 						hashedPasswords.add(passwordService.pbkdf2(item, saltItem));
+						System.out.println(passwordService.pbkdf2(item, saltItem));
 						saltList.add(new String(saltItem));
 					}
 					userRepository.updateSaltColumn(saltList);
