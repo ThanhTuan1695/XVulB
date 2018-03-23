@@ -19,7 +19,8 @@ public class UserRepository {
                 															rs.getString("username"), 
                 															rs.getString("password"), 
                 															rs.getString("firstname"), 
-                															rs.getString("lastname"))
+                															rs.getString("lastname"),
+                															rs.getString("salt"))
         										 );
 
         return result;
@@ -33,7 +34,8 @@ public class UserRepository {
         												   					rs.getString("username"), 
         												   					rs.getString("password"), 
         												   					rs.getString("firstname"), 
-        												   					rs.getString("lastname")), 
+        												   					rs.getString("lastname"),
+        												   					rs.getString("salt")), 
         										   				   username
                         
         										 );
