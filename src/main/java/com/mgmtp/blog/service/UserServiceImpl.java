@@ -29,20 +29,46 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByUsername(username);
 	}
     
+  
     @Override
     public List<User> findAll() {
     		return userRepository.findAll();
     }
 
+
+	
 	@Override
 	public boolean validateUser(String username, String password) {
 		List<User> users = (List<User>) findByUsername(username);
 		if(users == null || users.isEmpty()) {
 			return false;
 		}
+		
+		// Encode password before validating
+		try {
+			switch (securitySettings.getPwStorage()) {
+			case Clear:
+				// DO NOTHING		
+				break;
+			case Hashed:
+				// TODO:
+				password = passwordService.sha256(password);
+				break;
+			case SaltHashed:
+				// TODO:
+				password = passwordService.sha256(users.get(0).getSalt() + password);
+				break;
+			case PBKDF2:
+				break;
+			}
+		} catch (Exception e) {
+		}
+		
 		return password.equals(users.get(0).getPassword());
+		
 	}
-
+	
+	
 	@Override
 	public boolean resetAllPassword() {
 		try {

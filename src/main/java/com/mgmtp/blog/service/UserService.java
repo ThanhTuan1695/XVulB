@@ -10,7 +10,6 @@ public interface UserService {
 	List<User> findByUsername(String username);
 	
 	boolean validateUser(String username, String password);
-	
 	boolean resetAllPassword();
 	
 }

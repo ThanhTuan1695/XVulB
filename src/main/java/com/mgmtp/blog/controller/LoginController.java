@@ -74,24 +74,6 @@ public class LoginController {
 				break;
 		}
 		
-		//Encode password before validating
-		try {
-			switch (securitySettings.getPwStorage()) {
-				case Clear:
-					// DO NOTHING
-					break;
-				case Hashed:
-					// TODO:
-					password = passwordService.sha256(password);
-					break;
-				case SaltHashed:
-					// TODO:
-					break;
-				case PBKDF2:
-					break;
-			}
-		} catch (Exception e) {
-		}
 		
 		boolean isValidUser =  userService.validateUser(username, password);
 		
