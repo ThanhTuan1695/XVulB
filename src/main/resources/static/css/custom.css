@@ -1,5 +1,5 @@
 html {
-	position: relative;
+	position: relative;	
   	min-height: 100%;
 }
 body {
@@ -96,9 +96,3 @@ header {
   border-top: .05rem solid #e5e5e5;
 }
 
-.scrollspy-example {
-    position: relative;
-    height: 200px;
-    margin-top: .5rem;
-    overflow: auto;
-}
