@@ -4,7 +4,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public interface PasswordService {
-	String getRandomString(int length);
-	String sha256(String password) throws NoSuchAlgorithmException;
-	List<String> getInitialPassword();
+	
+	public String getRandomString(int length);
+	
+	public String sha256(String password) throws NoSuchAlgorithmException;
+	
+	public String getNextSalt();
+	
+	public List<String> getInitialPassword(int numberOfPass, int passwordLength);
+	
 }

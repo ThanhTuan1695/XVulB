@@ -14,6 +14,7 @@ public class SecuritySettings {
 	private SessionFixation ssFixation;
 	private SqlInjection sqlInjection;
 	private PasswordStorage pwStorage;
+	private ResetPassword resetPassword;
 
 	public SqlInjection getSqlInjection() {
 		return sqlInjection;
@@ -45,6 +46,14 @@ public class SecuritySettings {
 
 	public void setPwStorage(PasswordStorage pwStorage) {
 		this.pwStorage = pwStorage;
+	}
+
+	public ResetPassword getResetPassword() {
+		return resetPassword;
+	}
+
+	public void setResetPassword(ResetPassword resetPassword) {
+		this.resetPassword = resetPassword;
 	}
 	
 }

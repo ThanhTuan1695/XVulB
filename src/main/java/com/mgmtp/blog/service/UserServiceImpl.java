@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
+	
+	private static final int LENGTH_OF_RANDOM_PASS = 5;
 
     @Autowired
     private UserRepository userRepository;
@@ -44,16 +46,30 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean resetAllPassword() {
 		try {
+			int numberOfUsers = findAll().size();
+			List<String> passwords = passwordService.getInitialPassword(numberOfUsers, LENGTH_OF_RANDOM_PASS);
+			List<String> hashedPasswords = new ArrayList<>();
 			switch (securitySettings.getPwStorage()) {
 				case Clear:
-					List<String>passwords = passwordService.getInitialPassword();
 					userRepository.resetAllPassword(passwords);
 					break;
 				case Hashed:
-					// TODO:
+					
+					for(String item: passwords) {
+						hashedPasswords.add(passwordService.sha256(item));
+					}
+					userRepository.resetAllPassword(hashedPasswords);
 					break;
 				case SaltHashed:
-					// TODO:
+					List<String> salts = new ArrayList<>();
+					String salt;
+					for(String item: passwords) {
+						salt = passwordService.getNextSalt();
+						hashedPasswords.add(passwordService.sha256(salt + item));
+						salts.add(salt);
+					}
+					userRepository.updateSaltColumn(salts);
+					userRepository.resetAllPassword(hashedPasswords);
 					break;
 				case PBKDF2:
 					break;
