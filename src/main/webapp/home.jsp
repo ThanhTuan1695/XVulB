@@ -60,7 +60,7 @@
 	</div>
   </div>
 <div class="row">
-<h3 pb-3 mb-4 font-italic border-bottom>List of users</h3>
+<h3 class="pb-3 mb-4 font-italic border-bottom">List of users</h3>
 </div>
 	<div class=row>
           <div class="table-responsive">
@@ -70,6 +70,7 @@
                 <th>Id</th>
                 <th>Username</th>
                 <th>Password</th>
+                <th>Salt</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
                 
@@ -79,6 +80,7 @@
                 <td><c:out value="${user.id}" /></td>
                 <td><c:out value="${user.username}" /></td>
                 <td><c:out value="${user.password}" /></td>
+                <td><c:out value="${user.salt}" /></td>
                 <td><c:out value="${user.firstname}" /></td>
                 <td><c:out value="${user.lastname}" /></td>
             </tr>
