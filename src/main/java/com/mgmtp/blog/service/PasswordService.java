@@ -9,8 +9,8 @@ public interface PasswordService {
 	
 	public String sha256(String password) throws NoSuchAlgorithmException;
 	
-	public String getNextSalt();
-	
 	public List<String> getInitialPassword(int numberOfPass, int passwordLength);
+	
+	public String pbkdf2 (String password, String salt);
 	
 }
