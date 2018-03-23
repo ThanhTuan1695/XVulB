@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordService passwordService;
+    private PasswordServiceImpl passwordService;
     
     @Autowired
 	SecuritySettings securitySettings;

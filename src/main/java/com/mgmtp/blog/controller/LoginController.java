@@ -26,6 +26,9 @@ public class LoginController {
 	@Autowired
 	SecuritySettings securitySettings;
 	
+	@Autowired
+	PasswordService passwordService;
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showLoginPage(Model model, HttpServletRequest request) {
 		Cookie loginCookie = sessionService.checkLoginCookie(request);
@@ -69,6 +72,25 @@ public class LoginController {
 			case False:
 				// TODO:
 				break;
+		}
+		
+		//Encode password before validating
+		try {
+			switch (securitySettings.getPwStorage()) {
+				case Clear:
+					// DO NOTHING
+					break;
+				case Hashed:
+					// TODO:
+					password = passwordService.sha256(password);
+					break;
+				case SaltHashed:
+					// TODO:
+					break;
+				case PBKDF2:
+					break;
+			}
+		} catch (Exception e) {
 		}
 		
 		boolean isValidUser =  userService.validateUser(username, password);
