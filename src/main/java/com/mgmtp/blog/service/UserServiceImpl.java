@@ -14,9 +14,10 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 	
 	private static final int LENGTH_OF_RANDOM_PASS = 5;
+	public static final int SALT_BYTES = 8;
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
     @Autowired
     private PasswordServiceImpl passwordService;
@@ -80,7 +81,6 @@ public class UserServiceImpl implements UserService {
 					userRepository.resetAllPassword(passwords);
 					break;
 				case Hashed:
-					
 					for(String item: passwords) {
 						hashedPasswords.add(passwordService.sha256(item));
 					}
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
 					List<String> salts = new ArrayList<>();
 					String salt;
 					for(String item: passwords) {
-						salt = passwordService.getNextSalt();
+						salt = passwordService.getRandomString(SALT_BYTES);
 						hashedPasswords.add(passwordService.sha256(salt + item));
 						salts.add(salt);
 					}
@@ -98,6 +98,15 @@ public class UserServiceImpl implements UserService {
 					userRepository.resetAllPassword(hashedPasswords);
 					break;
 				case PBKDF2:
+					List<String> saltList = new ArrayList<>();
+					String saltItem;
+					for(String item: passwords) {
+						saltItem = passwordService.getRandomString(SALT_BYTES);
+						hashedPasswords.add(passwordService.pbkdf2(item, saltItem));
+						saltList.add(new String(saltItem));
+					}
+					userRepository.updateSaltColumn(saltList);
+					userRepository.resetAllPassword(hashedPasswords);
 					break;
 			}
 		} catch (Exception e) {

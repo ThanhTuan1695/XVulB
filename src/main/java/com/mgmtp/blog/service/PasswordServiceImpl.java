@@ -2,17 +2,27 @@ package com.mgmtp.blog.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PasswordServiceImpl implements PasswordService{
-	private static final Random RANDOM = new SecureRandom();
 	
+	// The following constants may be changed without breaking existing hashes.
+    
+    public static final int PBKDF2_ITERATIONS = 1000;
+    public static final int KEY_LENGTH = 512;
+	
+	//get random password with only lower-case letters
 	public String getRandomString(int length) {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -38,12 +48,6 @@ public class PasswordServiceImpl implements PasswordService{
         } 
         return sb.toString();
 	}
-	
-	public String getNextSalt() {
-	    byte[] salt = new byte[8];
-	    RANDOM.nextBytes(salt);
-	    return new String(salt);
-	}
 
 	public List<String> getInitialPassword(int numberOfPass, int passwordLength) {
 		List<String> result = new ArrayList<>();
@@ -57,5 +61,18 @@ public class PasswordServiceImpl implements PasswordService{
 		}
 		return result;
 	}
+	
+	public String pbkdf2 (String password, String salt) {
+        try {
+            SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA512" );
+            char[] pass = password.toCharArray();
+            PBEKeySpec spec = new PBEKeySpec(pass, salt.getBytes(), PBKDF2_ITERATIONS, KEY_LENGTH );
+            SecretKey key = skf.generateSecret( spec );
+            byte[] res = key.getEncoded();
+            return Hex.encodeHexString(res);
+        } catch ( NoSuchAlgorithmException | InvalidKeySpecException e ) {
+            throw new RuntimeException( e );
+        }
+    }
 
 }
