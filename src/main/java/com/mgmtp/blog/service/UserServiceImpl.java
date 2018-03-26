@@ -52,11 +52,9 @@ public class UserServiceImpl implements UserService {
 				// DO NOTHING		
 				break;
 			case Hashed:
-				// TODO:
 				password = passwordService.sha256(password);
 				break;
 			case SaltHashed:
-				// TODO:
 				password = passwordService.sha256(users.get(0).getSalt() + password);
 				break;
 			case PBKDF2:
@@ -90,9 +88,8 @@ public class UserServiceImpl implements UserService {
 					break;
 				case SaltHashed:
 					List<String> salts = new ArrayList<>();
-					String salt;
 					for(String item: passwords) {
-						salt = passwordService.getRandomString(SALT_BYTES);
+						String salt = passwordService.getRandomString(SALT_BYTES);
 						hashedPasswords.add(passwordService.sha256(salt + item));
 						salts.add(salt);
 					}
@@ -101,11 +98,10 @@ public class UserServiceImpl implements UserService {
 					break;
 				case PBKDF2:
 					List<String> saltList = new ArrayList<>();
-					String saltItem;
 					for(String item: passwords) {
-						saltItem = passwordService.getRandomString(SALT_BYTES);
-						hashedPasswords.add(passwordService.pbkdf2(item, saltItem));
-						saltList.add(new String(saltItem));
+						String salt = passwordService.getRandomString(SALT_BYTES);
+						hashedPasswords.add(passwordService.pbkdf2(item, salt));
+						saltList.add(salt);
 					}
 					userRepository.updateSaltColumn(saltList);
 					userRepository.resetAllPassword(hashedPasswords);
