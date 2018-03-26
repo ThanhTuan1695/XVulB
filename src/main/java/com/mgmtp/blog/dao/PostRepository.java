@@ -44,6 +44,7 @@ public class PostRepository {
         			param = 0;
         			
         		}
+        		//safe query
     			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = ?", 
 	    										   (rs, rowNum) -> new Post(rs.getLong("id"), 
 																		rs.getString("title"), 
@@ -53,7 +54,9 @@ public class PostRepository {
 	                    
 	    										 );
     		}
+    		
     		else {
+    			//unsafe query
     			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = " + id, 
 						   (rs, rowNum) -> new Post(rs.getLong("id"), 
 												rs.getString("title"), 
@@ -72,6 +75,7 @@ public class PostRepository {
     		String param = "%"+ query +"%";
     		List<Post> result;
     		if(safe) {
+    			//safe query
     			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE title LIKE ?", 
 						   (rs, rowNum) -> new Post(rs.getLong("id"), 
 												rs.getString("title"), 
@@ -83,6 +87,7 @@ public class PostRepository {
     			
     		}
     		else {
+    			//unsafe query
     			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE title LIKE '" + param + "'", 
         										   (rs, rowNum) -> new Post(rs.getLong("id"), 
 																		rs.getString("title"), 

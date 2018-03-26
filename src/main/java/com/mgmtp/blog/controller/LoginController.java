@@ -128,6 +128,7 @@ public class LoginController {
 		if (loginCookie != null) {
 			sessions = sessionService.findBySessionId(loginCookie.getValue());
     			if (!sessions.isEmpty()) {
+    				model.addAttribute("pwstorage", securitySettings.getPwStorage());
     				model.addAttribute("username", sessions.get(0).getUsername());	
 	    			List<User> users = (List<User>) userService.findAll();
 	    			model.addAttribute("users", users);

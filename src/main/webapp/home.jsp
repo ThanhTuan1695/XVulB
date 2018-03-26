@@ -72,7 +72,7 @@
             <tr>
                 <th>Id</th>
                 <th>Username</th>
-                <th>Password</th>
+                <th>Password ( ${pwstorage} ) </th>
                 <th>Salt</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
