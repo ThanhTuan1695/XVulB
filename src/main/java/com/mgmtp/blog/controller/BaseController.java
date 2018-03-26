@@ -42,7 +42,7 @@ public class BaseController {
     		
     		PostDTO post;
     		
-    		//check sqlinjection security setting
+    		//check sql injection security setting
     		switch (securitySettings.getSqlInjection()) {
 			case True:
 				post = postService.findById(query,true);			

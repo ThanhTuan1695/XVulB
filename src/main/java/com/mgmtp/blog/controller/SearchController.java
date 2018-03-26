@@ -44,6 +44,6 @@ public class SearchController {
     
 	    	model.addAttribute("searchquery", query);
 		model.addAttribute("posts", posts);
-	    return "search";
+	    return "index";
 	}
 }

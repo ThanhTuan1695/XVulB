@@ -79,12 +79,14 @@ public class UserServiceImpl implements UserService {
 			switch (securitySettings.getPwStorage()) {
 				case Clear:
 					userRepository.resetAllPassword(passwords);
+					userRepository.resetAllSalt();
 					break;
 				case Hashed:
 					for(String item: passwords) {
 						hashedPasswords.add(passwordService.sha256(item));
 					}
 					userRepository.resetAllPassword(hashedPasswords);
+					userRepository.resetAllSalt();
 					break;
 				case SaltHashed:
 					List<String> salts = new ArrayList<>();

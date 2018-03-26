@@ -11,11 +11,11 @@
           <h3 class="pb-3 mb-4 font-italic border-bottom">
             Welcome to XVulB
           </h3>
-		  <%-- <c:when test="${error == null}">
-		        <div class="alert alert-danger" role="alert">
-  				   <c:out value="${error}"/>
-		  		</div>	
-		  </c:when>   --%>  
+		  <c:if test="${searchquery != null}">
+		    <div class="alert alert-info" role="alert">
+		  		Searching result for <strong>${searchquery}</strong> 
+			</div>	
+		  </c:if>   
 		  <c:forEach items="${posts}" var="post">
 		    <div class="blog-post">
 		      <h2 class="blog-post-title">

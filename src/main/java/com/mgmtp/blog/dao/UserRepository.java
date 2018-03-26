@@ -120,4 +120,15 @@ public class UserRepository {
 		}
     }
 
+	public void resetAllSalt() {
+		try {
+			for(int id=1; id< findAll().size() + 1; id++) {
+				jdbcTemplate.update("UPDATE Users SET salt = ? WHERE id = ?",
+							"", id);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+	}
+
 }
