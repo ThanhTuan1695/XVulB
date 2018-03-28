@@ -1,9 +1,13 @@
 package com.mgmtp.blog.dao;
 
 import com.mgmtp.blog.model.Post;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -87,15 +91,19 @@ public class PostRepository {
     			
     		}
     		else {
-    			//unsafe query
-    			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE title LIKE '" + param + "'", 
-        										   (rs, rowNum) -> new Post(rs.getLong("id"), 
-																		rs.getString("title"), 
-																		rs.getString("created_day"), 
-																		rs.getString("content"), 
-																		userRepository.findById(rs.getLong("user_id")).get(0))
-                        
-        										 );
+    			try {
+	    			//unsafe query
+	    			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE title LIKE '" + param + "'", 
+	        										   (rs, rowNum) -> new Post(rs.getLong("id"), 
+																			rs.getString("title"), 
+																			rs.getString("created_day"), 
+																			rs.getString("content"), 
+																			userRepository.findById(rs.getLong("user_id")).get(0))
+	                        
+	        										 );
+    			} catch (BadSqlGrammarException e) {
+    				return new ArrayList<Post>();
+    			}
     			
     		}
     		return result;

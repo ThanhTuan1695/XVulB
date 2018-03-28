@@ -112,5 +112,16 @@ public class UserServiceImpl implements UserService {
 		}
 		return true;
 	}
+
+
+	@Override
+	public boolean addUser(User user) {
+		try {
+			userRepository.addUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
     
 }

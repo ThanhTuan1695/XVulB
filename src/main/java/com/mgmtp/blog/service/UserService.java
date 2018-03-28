@@ -13,4 +13,6 @@ public interface UserService {
 	
 	boolean resetAllPassword();
 	
+	boolean addUser(User user);
+	
 }

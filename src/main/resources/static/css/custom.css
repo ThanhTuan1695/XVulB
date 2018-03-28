@@ -43,16 +43,6 @@ header {
 .form-login .form-control:focus {
   z-index: 2;
 }
-.form-login input[type="username"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-login input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
 
 /* Pagination */
 .blog-pagination {

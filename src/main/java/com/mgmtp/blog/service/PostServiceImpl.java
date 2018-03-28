@@ -6,7 +6,6 @@ import com.mgmtp.blog.model.PostDTO;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,32 +13,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class PostServiceImpl implements PostService {
 
-    @Autowired
-    private PostRepository postRepository;
+	@Autowired
+	private PostRepository postRepository;
 
-    @Override
+	@Override
 	public List<PostDTO> findByTitle(String title, boolean safe) {
 		List<PostDTO> result = new ArrayList<>();
-		for (Post item : postRepository.findByTitle(title,safe)) {
+			for (Post item : postRepository.findByTitle(title,safe)) {
+				result.add(PostDTO.fromPostModel(item));
+			}
+
+
+		return result;
+	}
+
+
+	@Override
+	public List<PostDTO> findAll() {
+		List<PostDTO> result = new ArrayList<>();
+		for (Post item : postRepository.findAll()) {
 			result.add(PostDTO.fromPostModel(item));
 		}
 		return result;
 	}
-    
-    
-    @Override
-    public List<PostDTO> findAll() {
-    		List<PostDTO> result = new ArrayList<>();
-		for (Post item : postRepository.findAll()) {
-			result.add(PostDTO.fromPostModel(item));
-		}
-    		return result;
-    }
 
 	@Override
 	public boolean addPost(PostDTO post) {
 		try {
-//			postRepository.addPost(post);
+			//			postRepository.addPost(post);
 		} catch (Exception e) {
 			return false;
 		}
@@ -54,5 +55,5 @@ public class PostServiceImpl implements PostService {
 		}
 		return PostDTO.fromPostModel(posts.get(0));
 	}
-    
+
 }

@@ -12,6 +12,8 @@ public class SecurityEnum {
 	
 	public static enum ResetPassword { True, False };
 	
+	public static enum SetCookie { True, False };
+	
 }
 
 

@@ -2,6 +2,7 @@ package com.mgmtp.blog.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class PasswordServiceImpl implements PasswordService{
 	
 	// The following constants may be changed without breaking existing hashes.
     
-    public static final int PBKDF2_ITERATIONS = 1000;
+    public static final int PBKDF2_ITERATIONS = 10000;
     public static final int KEY_LENGTH = 256;
 	
 	//get random password with only lower-case letters
@@ -27,7 +28,7 @@ public class PasswordServiceImpl implements PasswordService{
         try {
         		int leftLimit = 97; // letter 'a'
         		int rightLimit = 122; // letter 'z'
-                Random random = new Random();
+                Random random = new SecureRandom();
                 StringBuilder buffer = new StringBuilder(length);
                 for (int i = 0; i < length; i++) {
                     int randomLimitedInt = leftLimit + (int) 
@@ -48,6 +49,7 @@ public class PasswordServiceImpl implements PasswordService{
 	        byte[] result = mDigest.digest(password.getBytes());
 	        StringBuffer sb = new StringBuffer();
 	        for (int i = 0; i < result.length; i++) {
+	        		System.out.println(result[i]);
 	        		String hex = Integer.toHexString(0xff & result[i]);
 	            if(hex.length() == 1) sb.append('0');
 	            	sb.append(hex);
