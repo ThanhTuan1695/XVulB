@@ -76,40 +76,12 @@ public class LoginController {
 		
 		
 		boolean isValidUser =  userService.validateUser(username, password);
-		
-		
 		if (!isValidUser) {
 			model.addAttribute("errorMessage", "Invalid Credentials");
             return "login";
         }
 		
-		String sessionid = "";
-		switch (securitySettings.getSsFixation()) {
-			case True:
-				sessionid = sessionService.getRandomSessionId();
-				break;
-			case False:
-				Cookie loginCookie =  sessionService.checkLoginCookie(request);
-				if (loginCookie != null) {
-		            sessionid = loginCookie.getValue();
-		        }
-				else {
-					sessionid = sessionService.getRandomSessionId();
-				}
-				break;
-		}
-		
-		Cookie loginCookie = new Cookie("SESSIONID", sessionid);
-		switch (securitySettings.getSetCookie()) {
-			case True:
-				loginCookie.setHttpOnly(true);
-				break;
-			case False:
-				//do nothing
-				break;
-		}
-		response.addCookie(loginCookie);
-		sessionService.addSession(username, sessionid);
+		setSessionCookie(request, response, username);
 		return "redirect:/home";
     }
 	
@@ -169,83 +141,74 @@ public class LoginController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String register(HttpServletRequest request, 
 			HttpServletResponse response, Model model) {
-//		String username = request.getParameter("username");  
-//		String password = request.getParameter("password"); 
-//		String firstname = request.getParameter("firstname"); 
-//		String lastname = request.getParameter("lastname"); 
-//		String g_recaptcha_response = request.getParameter("g-recaptcha-response");
-//		
-//		switch (securitySettings.getPwbruteforce()) {
-//			case Captcha:
-//				model.addAttribute("isCaptchaEnabled", true);
-//				if(!captchaService.verifyResponse(g_recaptcha_response)) {
-//					model.addAttribute("errorMessage", "You're going too fast");
-//					return "signup";
-//				}
-//				break;
-//			case Userlockout:
-//				// TODO:
-//				break;
-//			case False:
-//				// TODO:
-//				break;
-//		}
-//		
-//		if (!userService.findByUsername(username).isEmpty()) {
-//			model.addAttribute("errorMessage", "User is existed");
-//            return "signup";
-//        }
-//		
-//		User user;
-//		switch (securitySettings.getPwStorage()) {
-//			case Clear:
-//			    user = new User (username, password, firstname, lastname);
-//				break;
-//			case Hashed:
-//				user = new User (username, passwordService.sha256(password), firstname, lastname);
-//				break;
-//			case SaltHashed:
-//				String salt = passwordService.getRandomString(8)
-//				user = new User (username, passwordService.pbkdf2(password, salt))
-//				break;
-//			case PBKDF2:
-//				List<String> saltList = new ArrayList<>();
-//				for(String item: passwords) {
-//					String salt = passwordService.getRandomString(SALT_BYTES);
-//					hashedPasswords.add(passwordService.pbkdf2(item, salt));
-//					saltList.add(salt);
-//				}
-//				userRepository.updateSaltColumn(saltList);
-//				userRepository.resetAllPassword(hashedPasswords);
-//				break;
-//		}
-//			
-//		if (!userService.addUser(user)) {
-//			model.addAttribute("errorMessage", "Cannot register");
-//            return "signup";
-//		}
-//		
-//		String sessionid = "";
-//		switch (securitySettings.getSsFixation()) {
-//			case True:
-//				sessionid = sessionService.getRandomSessionId();
-//				break;
-//			case False:
-//				Cookie loginCookie =  sessionService.checkLoginCookie(request);
-//				if (loginCookie != null) {
-//		            sessionid = loginCookie.getValue();
-//		        }
-//				else {
-//					sessionid = sessionService.getRandomSessionId();
-//				}
-//				break;
-//		}
-//		
-//		Cookie loginCookie = new Cookie("SESSIONID", sessionid);
-//		loginCookie.setMaxAge(30*60);
-//		response.addCookie(loginCookie);
-//		sessionService.addSession(username, sessionid);
+		String username = request.getParameter("username");  
+		String password = request.getParameter("password"); 
+		String firstname = request.getParameter("firstname"); 
+		String lastname = request.getParameter("lastname"); 
+		
+		if (!userService.findByUsername(username).isEmpty()) {
+			model.addAttribute("errorMessage", "User is existed");
+            return "signup";
+        }
+		
+		String salt = passwordService.getRandomString(8);
+		User user = new User (username, password, firstname, lastname);
+		
+		switch (securitySettings.getPwStorage()) {
+			case Clear:
+			    //do nothing
+				break;
+			case Hashed:
+				user.setPassword(passwordService.sha256(password));
+				break;
+			case SaltHashed:
+				user.setPassword(passwordService.sha256(salt+password));
+				user.setSalt(salt);
+				break;
+			case PBKDF2:
+				user.setPassword(passwordService.pbkdf2(password, salt));
+				user.setSalt(salt);
+				break;
+		}
+			
+		if (!userService.addUser(user, salt)) {
+			model.addAttribute("errorMessage", "Cannot register");
+            return "signup";
+		}
+		
+		setSessionCookie(request, response, username);
 		return "redirect:/home";
+	}
+	
+	private void setSessionCookie(HttpServletRequest request, 
+			HttpServletResponse response, String username) {
+		String sessionid = "";
+		switch (securitySettings.getSsFixation()) {
+			case True:
+				sessionid = sessionService.getRandomSessionId();
+				break;
+			case False:
+				Cookie loginCookie =  sessionService.checkLoginCookie(request);
+				if (loginCookie != null) {
+		            sessionid = loginCookie.getValue();
+		        }
+				else {
+					sessionid = sessionService.getRandomSessionId();
+				}
+				break;
+		}
+		
+		Cookie loginCookie = new Cookie("SESSIONID", sessionid);
+		switch (securitySettings.getSetCookie()) {
+			case True:
+				loginCookie.setHttpOnly(true);
+				break;
+			case False:
+				//do nothing
+				break;
+		}
+		response.addCookie(loginCookie);
+		sessionService.addSession(username, sessionid);
 	}
 	
 }

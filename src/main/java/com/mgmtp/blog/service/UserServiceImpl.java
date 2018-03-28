@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 						hashedPasswords.add(passwordService.sha256(salt + item));
 						salts.add(salt);
 					}
-					userRepository.updateSaltColumn(salts);
+					userRepository.updateAllSaltColumn(salts);
 					userRepository.resetAllPassword(hashedPasswords);
 					break;
 				case PBKDF2:
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 						hashedPasswords.add(passwordService.pbkdf2(item, salt));
 						saltList.add(salt);
 					}
-					userRepository.updateSaltColumn(saltList);
+					userRepository.updateAllSaltColumn(saltList);
 					userRepository.resetAllPassword(hashedPasswords);
 					break;
 			}
@@ -115,9 +115,24 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public boolean addUser(User user) {
+	public boolean addUser(User user, String salt) {
 		try {
 			userRepository.addUser(user);
+			switch (securitySettings.getPwStorage()) {
+				case Clear:
+					// DO NOTHING		
+					break;
+				case Hashed:
+					// DO NOTHING	
+					break;
+				case SaltHashed:
+					userRepository.updateSaltColumn(user.getUsername(), salt);
+					break;
+				case PBKDF2:
+					userRepository.updateSaltColumn(user.getUsername(), salt);
+					break;
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
