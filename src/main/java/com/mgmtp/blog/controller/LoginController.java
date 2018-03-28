@@ -34,7 +34,7 @@ public class LoginController {
 		Cookie loginCookie = sessionService.checkLoginCookie(request);
 		
         if (loginCookie != null)
-        		if (!sessionService.findBySessionId(loginCookie.getValue()).isEmpty()) 
+        		if (!sessionService.checkSessionId(loginCookie.getValue()).isEmpty()) 
         			return "redirect:/home";
 		
 		switch (securitySettings.getPwbruteforce()) {
@@ -126,7 +126,7 @@ public class LoginController {
 		Cookie loginCookie = sessionService.checkLoginCookie(request);
 		List<Session> sessions;
 		if (loginCookie != null) {
-			sessions = sessionService.findBySessionId(loginCookie.getValue());
+			sessions = sessionService.checkSessionId(loginCookie.getValue());
     			if (!sessions.isEmpty()) {
     				model.addAttribute("pwstorage", securitySettings.getPwStorage());
     				model.addAttribute("username", sessions.get(0).getUsername());	

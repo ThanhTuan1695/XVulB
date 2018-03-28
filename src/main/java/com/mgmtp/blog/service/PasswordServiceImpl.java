@@ -19,7 +19,7 @@ public class PasswordServiceImpl implements PasswordService{
 	
 	// The following constants may be changed without breaking existing hashes.
     
-    public static final int PBKDF2_ITERATIONS = 1000;
+    public static final int PBKDF2_ITERATIONS = 1000000;
     public static final int KEY_LENGTH = 256;
 	
 	//get random password with only lower-case letters
@@ -48,7 +48,7 @@ public class PasswordServiceImpl implements PasswordService{
 	        byte[] result = mDigest.digest(password.getBytes());
 	        StringBuffer sb = new StringBuffer();
 	        for (int i = 0; i < result.length; i++) {
-	        		String hex = Integer.toHexString(0xff & result[i]);
+	        		String hex = Integer.toHexString(result[i]);
 	            if(hex.length() == 1) sb.append('0');
 	            	sb.append(hex);
 	        } 
