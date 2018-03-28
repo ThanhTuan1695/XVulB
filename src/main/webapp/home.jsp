@@ -3,11 +3,11 @@
 <%@ page import="java.util.List"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:wrapper>
+<t:wrapper2>
 
 <div class="container">
 <div class="row">
-<h3 class="pb-3 mb-4 font-italic border-bottom">Welcome, <b style="color:blue">${username}</b> <a href="/logout">Logout</a></h3>
+<h3 class="pb-3 mb-4 font-italic border-bottom">Welcome, <b style="color:blue">${username}</b></h3>
 </div>
  <div class="row">	
   <div class="col-md-4">	
@@ -72,7 +72,7 @@
             <tr>
                 <th>Id</th>
                 <th>Username</th>
-                <th>Password ( ${pwstorage} ) </th>
+                <th>Password (${pwstorage}) </th>
                 <th>Salt</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
@@ -94,4 +94,4 @@
 
 </div>
 <div></div>
-</t:wrapper>
+</t:wrapper2>

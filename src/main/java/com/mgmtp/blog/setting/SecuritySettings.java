@@ -15,6 +15,7 @@ public class SecuritySettings {
 	private SqlInjection sqlInjection;
 	private PasswordStorage pwStorage;
 	private ResetPassword resetPassword;
+	private SetCookie setCookie;
 
 	public SqlInjection getSqlInjection() {
 		return sqlInjection;
@@ -54,6 +55,14 @@ public class SecuritySettings {
 
 	public void setResetPassword(ResetPassword resetPassword) {
 		this.resetPassword = resetPassword;
+	}
+
+	public SetCookie getSetCookie() {
+		return setCookie;
+	}
+
+	public void setSetCookie(SetCookie setCookie) {
+		this.setCookie = setCookie;
 	}
 	
 }
