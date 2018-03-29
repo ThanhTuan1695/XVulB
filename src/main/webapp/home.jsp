@@ -54,6 +54,17 @@
 			    <textarea class="form-control" id="post-content" name="post-content" rows="4"></textarea>
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>
+			  
+			  <c:if test="${isSuccess != null}">
+			    <c:choose>
+			  		<c:when test="${isSuccess}">
+					<p style="color:green">Adding new post succeeded</p>
+					</c:when>
+					<c:otherwise>
+					<p style="color:red">Something went wrong</p>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
 			</form> 
 	       </div>
 	</div>

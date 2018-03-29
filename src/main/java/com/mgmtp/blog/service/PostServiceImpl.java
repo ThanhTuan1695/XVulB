@@ -38,13 +38,13 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public boolean addPost(PostDTO post) {
+	public boolean addPost(Post post) {
+		boolean result = false;
 		try {
-			//			postRepository.addPost(post);
+			result = postRepository.addPost(post);
 		} catch (Exception e) {
-			return false;
 		}
-		return true;
+		return result;
 	}
 
 	@Override

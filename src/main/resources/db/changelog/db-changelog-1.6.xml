@@ -1,0 +1,17 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="modify-datatype-post-createddate" author="khanhphamhong" >
+        <modifyDataType
+            columnName="created_day"
+            newDataType="varchar(100)"
+            tableName="posts"/>
+    </changeSet> 
+
+    <changeSet id="tag-1.0" author="khanhphamhong" >
+        <tagDatabase tag="1.0" />
+    </changeSet>
+
+</databaseChangeLog>

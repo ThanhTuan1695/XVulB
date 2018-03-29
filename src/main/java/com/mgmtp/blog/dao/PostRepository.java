@@ -1,6 +1,7 @@
 package com.mgmtp.blog.dao;
 
 import com.mgmtp.blog.model.Post;
+import com.mgmtp.blog.model.PostDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -111,13 +112,15 @@ public class PostRepository {
 
     }
 
-    public void addPost(Post post) {
+    public boolean addPost(Post post) {
     		try {
-    			jdbcTemplate.update("INSERT INTO Posts(id, title, created_day, content, user_id) VALUES (?,?,?,?,?)",
-    	                post.getId(), post.getTitle(), post.getCreatedDay(), post.getContent(), post.getUser().getId());
+    			jdbcTemplate.update("INSERT INTO Posts(title, created_day, content, user_id) VALUES (?,NOW(),?,?)",
+    	                 post.getTitle(), post.getContent(), post.getUser().getId());
     		} catch (Exception e) {
     			e.printStackTrace();
+    			return false;
     		}
+    		return true;
     }
 
 
