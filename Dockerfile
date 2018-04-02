@@ -10,5 +10,5 @@ RUN mvn install
 
 
 FROM java:8
-COPY --from=maven /usr/src/app/target/XVulB-0.0.1-SNAPSHOT.jar /opt/app.jar
+COPY --from=maven /usr/src/app/target/XVulB-*.jar /opt/app.jar
 CMD ["java","-jar","/opt/app.jar"]
