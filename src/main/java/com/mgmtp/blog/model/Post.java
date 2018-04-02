@@ -34,7 +34,14 @@ public class Post {
 		this.content = content;
 		this.user = user;
 	}
-
+    
+    public Post(String title, String content, User user) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.user = user;
+	}
+    
 	public Long getId() {
         return id;
     }

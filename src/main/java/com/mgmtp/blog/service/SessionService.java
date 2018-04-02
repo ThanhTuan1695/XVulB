@@ -10,7 +10,7 @@ public interface SessionService {
 	
 	List<Session> findByUsername(String username);
 	
-	List<Session> findBySessionId(String sessionid);
+	List<Session> checkSessionId(String sessionid);
 	
 	void delBySessionId(String sessionid);
 	

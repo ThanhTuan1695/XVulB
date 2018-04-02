@@ -7,12 +7,12 @@
 	<div class="loginpage text-center">
 	
 		<form class="form-login" action="/login" method="post">
-			<h1 h3 mb-3 font-weight-normal>Please login</h1>
+			<h1 class='h3 mb-3 font-weight-normal'>Please login</h1>
 			<label for="username" class="sr-only">Username</label>
-			<input type="username" name="username" class="form-control" placeholder="username" required>
+			<input type="text" name="username" class="form-control" placeholder="username" required>
 			<label for="password" class="sr-only">Password</label>
 			<input type="password" name="password" class="form-control" placeholder="password" required>
-			
+			<p>Don't have an account ? Please <a href='/signup'> register </a></p>
 			<c:if test="${isCaptchaEnabled}">
 				<div class="g-recaptcha" data-sitekey="6LefDkwUAAAAAH20_0jZI2JNic67TnXNgXX1Ge75"></div>
 			</c:if>

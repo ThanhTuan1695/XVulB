@@ -3,6 +3,7 @@ package com.mgmtp.blog.service;
 import com.mgmtp.blog.dao.SessionRepository;
 import com.mgmtp.blog.model.Session;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -27,9 +28,13 @@ public class SessionServiceImpl implements SessionService {
 		return sessionRepository.findByUsername(username);
 	}
     
+    // Check session and refresh
     @Override
-	public List<Session> findBySessionId(String sessionid) {
-		return sessionRepository.findBySessionId(sessionid);
+	public List<Session> checkSessionId(String sessionid) {
+    		List<Session> result = sessionRepository.findBySessionId(sessionid);    		
+    		if(!result.isEmpty())
+    			sessionRepository.refreshSession(sessionid);
+		return result;
 	}
     
     @Override

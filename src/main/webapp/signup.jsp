@@ -4,31 +4,23 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:wrapper>
-	<h1>Sign Up</h1>
-	<div class="signupform">
-		<form action="/signup" method="post">
-			<label><b>Username</b></label>
+	<div class="loginpage text-center">
+	
+		<form class="form-login" method="post">
+			<h1 class='h3 mb-3 font-weight-normal'>Register form</h1>
+			<input type="text" name="username" class="form-control" placeholder="username" required>
+			<input type="password" name="password" class="form-control" placeholder="password" required>
+			<input type="password" name="re-password" class="form-control" placeholder="re-enter password" required 
+					onchange="validate()">
+			<input type="text" name="firstname" class="form-control" placeholder="your first name" required>
+			<input type="text" name="lastname" class="form-control" placeholder="your last name" required>
 			<br>
-			<input type="text" name="username" placeholder="username" required>
-			<br>
-			<label><b>Password</b></label>
-			<br>
-			<input type="password" name="password" placeholder="password" required>
-			<br>
-			<label><b>Re-enter Password</b></label>
-			<br>
-			<input type="password" name="repassword" placeholder="re-enter password" required>
-			
-			<c:if test="${isCaptchaEnabled}">
-				<div class="g-recaptcha" data-sitekey="6LefDkwUAAAAAH20_0jZI2JNic67TnXNgXX1Ge75"></div>
-			</c:if>
-			
-			<br>
-			<input type="submit" value="Submit">
-			<c:if test="${not empty errorMessage}">
-				<p style="color:red">${errorMessage}</p>
-			</c:if>
-		
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+			<p class="error" style="color:red">
+				<c:if test="${not empty errorMessage}">
+					${errorMessage}
+				</c:if>
+			</p>
 		</form>
 	</div>
 </t:wrapper>

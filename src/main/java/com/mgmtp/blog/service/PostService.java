@@ -1,6 +1,10 @@
 package com.mgmtp.blog.service;
 
 import com.mgmtp.blog.model.PostDTO;
+import com.mgmtp.blog.model.Post;
+
+import java.util.List;
+
 
 import java.util.List;
 
@@ -12,6 +16,6 @@ public interface PostService {
 	
 	PostDTO findById(String id, boolean safe);
 	
-	boolean addPost(PostDTO post);
+	boolean addPost(Post post);
 	
 }

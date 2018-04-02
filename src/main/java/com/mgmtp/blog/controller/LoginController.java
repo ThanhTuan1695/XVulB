@@ -34,7 +34,7 @@ public class LoginController {
 		Cookie loginCookie = sessionService.checkLoginCookie(request);
 		
         if (loginCookie != null)
-        		if (!sessionService.findBySessionId(loginCookie.getValue()).isEmpty()) 
+        		if (!sessionService.checkSessionId(loginCookie.getValue()).isEmpty()) 
         			return "redirect:/home";
 		
 		switch (securitySettings.getPwbruteforce()) {
@@ -76,35 +76,13 @@ public class LoginController {
 		
 		
 		boolean isValidUser =  userService.validateUser(username, password);
-		
-		
 		if (!isValidUser) {
 			model.addAttribute("errorMessage", "Invalid Credentials");
             return "login";
         }
 		
-		String sessionid = "";
-		switch (securitySettings.getSsFixation()) {
-			case True:
-				sessionid = sessionService.getRandomSessionId();
-				break;
-			case False:
-				Cookie loginCookie =  sessionService.checkLoginCookie(request);
-				if (loginCookie != null) {
-		            sessionid = loginCookie.getValue();
-		        }
-				else {
-					sessionid = sessionService.getRandomSessionId();
-				}
-				break;
-		}
-		
-		Cookie loginCookie = new Cookie("SESSIONID", sessionid);
-		loginCookie.setMaxAge(30*60);
-		response.addCookie(loginCookie);
-		sessionService.addSession(username, sessionid);
+		setSessionCookie(request, response, username);
 		return "redirect:/home";
-        
     }
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -126,7 +104,7 @@ public class LoginController {
 		Cookie loginCookie = sessionService.checkLoginCookie(request);
 		List<Session> sessions;
 		if (loginCookie != null) {
-			sessions = sessionService.findBySessionId(loginCookie.getValue());
+			sessions = sessionService.checkSessionId(loginCookie.getValue());
     			if (!sessions.isEmpty()) {
     				model.addAttribute("pwstorage", securitySettings.getPwStorage());
     				model.addAttribute("username", sessions.get(0).getUsername());	
@@ -137,5 +115,100 @@ public class LoginController {
 		}
 		return "redirect:/";
     }
+	
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String showRegisterPage(Model model, HttpServletRequest request) {
+		Cookie loginCookie = sessionService.checkLoginCookie(request);
+		
+        if (loginCookie != null)
+        		if (!sessionService.checkSessionId(loginCookie.getValue()).isEmpty()) 
+        			return "redirect:/home";
+		
+		switch (securitySettings.getPwbruteforce()) {
+			case Captcha:
+				model.addAttribute("isCaptchaEnabled", true);					
+				break;
+			case Userlockout:
+				// TODO:
+				break;
+			case False:
+				// TODO:
+				break;
+		}
+        return "signup";
+    }
+	
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public String register(HttpServletRequest request, 
+			HttpServletResponse response, Model model) {
+		String username = request.getParameter("username");  
+		String password = request.getParameter("password"); 
+		String firstname = request.getParameter("firstname"); 
+		String lastname = request.getParameter("lastname"); 
+		
+		if (!userService.findByUsername(username).isEmpty()) {
+			model.addAttribute("errorMessage", "User is existed");
+            return "signup";
+        }
+		
+		String salt = passwordService.getRandomString(8);
+		User user = new User (username, password, firstname, lastname);
+		
+		switch (securitySettings.getPwStorage()) {
+			case Clear:
+			    //do nothing
+				break;
+			case Hashed:
+				user.setPassword(passwordService.sha256(password));
+				break;
+			case SaltHashed:
+				user.setPassword(passwordService.sha256(salt+password));
+				user.setSalt(salt);
+				break;
+			case PBKDF2:
+				user.setPassword(passwordService.pbkdf2(password, salt));
+				user.setSalt(salt);
+				break;
+		}
+			
+		if (!userService.addUser(user, salt)) {
+			model.addAttribute("errorMessage", "Cannot register");
+            return "signup";
+		}
+		
+		setSessionCookie(request, response, username);
+		return "redirect:/home";
+	}
+	
+	private void setSessionCookie(HttpServletRequest request, 
+			HttpServletResponse response, String username) {
+		String sessionid = "";
+		switch (securitySettings.getSsFixation()) {
+			case True:
+				sessionid = sessionService.getRandomSessionId();
+				break;
+			case False:
+				Cookie loginCookie =  sessionService.checkLoginCookie(request);
+				if (loginCookie != null) {
+		            sessionid = loginCookie.getValue();
+		        }
+				else {
+					sessionid = sessionService.getRandomSessionId();
+				}
+				break;
+		}
+		
+		Cookie loginCookie = new Cookie("SESSIONID", sessionid);
+		switch (securitySettings.getSetCookie()) {
+			case True:
+				loginCookie.setHttpOnly(true);
+				break;
+			case False:
+				//do nothing
+				break;
+		}
+		response.addCookie(loginCookie);
+		sessionService.addSession(username, sessionid);
+	}
 	
 }

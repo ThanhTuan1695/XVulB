@@ -108,7 +108,7 @@ public class UserRepository {
 		}
     }
     
-    public void updateSaltColumn(List<String> salts) {
+    public void updateAllSaltColumn(List<String> salts) {
     		try {
     			int id = 1; 
     			for(String salt: salts) {
@@ -119,6 +119,14 @@ public class UserRepository {
 			e.getStackTrace();
 		}
     }
+    
+    public void updateSaltColumn(String username, String salt) {
+		try {
+			jdbcTemplate.update("UPDATE Users SET salt = ? WHERE username = ?", salt, username);
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+	}
 
 	public void resetAllSalt() {
 		try {
