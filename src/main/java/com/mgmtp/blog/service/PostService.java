@@ -15,6 +15,7 @@ public interface PostService {
 	List<PostDTO> findByTitle(String title, boolean safe);
 	
 	PostDTO findById(String id, boolean safe);
+	Post findById(String id);
 	
 	boolean addPost(Post post);
 	

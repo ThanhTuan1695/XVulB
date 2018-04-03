@@ -55,5 +55,16 @@ public class PostServiceImpl implements PostService {
 		}
 		return PostDTO.fromPostModel(posts.get(0));
 	}
+	
+	@Override
+	public Post findById(String id) {
+		List<Post> posts = postRepository.findById(id, false);
+		if(posts.size()==0) {
+			return null;
+		}
+		return posts.get(0);
+	}
+	
+	
 
 }
