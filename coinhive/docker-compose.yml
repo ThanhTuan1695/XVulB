@@ -1,0 +1,23 @@
+# Use postgres/password user/password credentials
+version: '3.2'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      XVULB_DB_DATABASE: xvulb
+      XVULB_DB_USER: xvulb_app
+      XVULB_DB_PASSWORD: password
+    ports:
+      - 5432:5432
+    build:
+      context: ../postgres/
+  coinhive:
+    image: nginx
+    build: .
+    ports:
+      - 8099:80
