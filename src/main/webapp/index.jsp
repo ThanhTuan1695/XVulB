@@ -13,7 +13,19 @@
           </h3>
 		  <c:if test="${searchquery != null}">
 		    <div class="alert alert-info" role="alert">
-		  		Searching result for <strong>${searchquery}</strong> 
+		    		Searching result for <strong>
+		    			<c:choose>
+					    <c:when test="${xssPrevention != null}">
+					        ${fn:escapeXml(searchquery)}
+					    </c:when>    
+					    <c:otherwise>
+					        ${searchquery}
+					    </c:otherwise>
+					</c:choose>
+	<%-- 		    		<c:if test="${xssPrevention != null}">
+					  	${fn:escapeXml(searchquery)}
+					</c:if>   --%> 
+		  		</strong> 
 			</div>	
 		  </c:if>   
 		  <c:forEach items="${posts}" var="post">

@@ -32,16 +32,23 @@ public class SearchController {
 		
 		List<PostDTO> posts;
 		
-		//check sqlinjection security setting
+		//check SQL injection security setting
 		switch (securitySettings.getSqlInjection()) {
 			case True:
 				posts = (List<PostDTO>) postService.findByTitle(query,true);				
 				break;
 			default:
-				posts = (List<PostDTO>) postService.findByTitle(query,false);	
-				
+				posts = (List<PostDTO>) postService.findByTitle(query,false);		
 		}
-    
+		
+		//check XSS prevention security setting
+				switch (securitySettings.getXssPrevention()) {
+					case True:
+						model.addAttribute("xssPrevention", "True");				
+						break;
+					default:
+						break;
+				}
 	    	model.addAttribute("searchquery", query);
 		model.addAttribute("posts", posts);
 	    return "index";

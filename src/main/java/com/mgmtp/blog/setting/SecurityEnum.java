@@ -14,6 +14,8 @@ public class SecurityEnum {
 	
 	public static enum SetCookie { True, False };
 	
+	public static enum XSSPrevention {True, False};
+	
 }
 
 
