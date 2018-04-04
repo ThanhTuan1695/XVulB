@@ -16,15 +16,12 @@
 		    		Searching result for <strong>
 		    			<c:choose>
 					    <c:when test="${xssPrevention != null}">
-					        ${fn:escapeXml(searchquery)}
+					        <c:out value="${searchquery}"/>
 					    </c:when>    
 					    <c:otherwise>
 					        ${searchquery}
 					    </c:otherwise>
 					</c:choose>
-	<%-- 		    		<c:if test="${xssPrevention != null}">
-					  	${fn:escapeXml(searchquery)}
-					</c:if>   --%> 
 		  		</strong> 
 			</div>	
 		  </c:if>   

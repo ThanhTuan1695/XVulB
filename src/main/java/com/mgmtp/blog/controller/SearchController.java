@@ -42,13 +42,13 @@ public class SearchController {
 		}
 		
 		//check XSS prevention security setting
-				switch (securitySettings.getXssPrevention()) {
-					case True:
-						model.addAttribute("xssPrevention", "True");				
-						break;
-					default:
-						break;
-				}
+		switch (securitySettings.getXssPrevention()) {
+			case True:
+				model.addAttribute("xssPrevention", "True");				
+				break;
+			default:
+				break;
+		}
 	    	model.addAttribute("searchquery", query);
 		model.addAttribute("posts", posts);
 	    return "index";

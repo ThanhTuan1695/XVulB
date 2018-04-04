@@ -35,7 +35,14 @@
 		       <div class="comments-block">
 		    		 <p class="blog-comment-meta"><c:out value="${comment.createdAt}"/> by <c:out value="${comment.createdBy}"/></p>
 		    	   <div>
-		         <c:out value="${comment.comment}"/>
+		    	   		<c:choose>
+					    <c:when test="${xssPrevention != null}">
+					        <c:out value="${comment.comment}"/> 
+					    </c:when>    
+					    <c:otherwise>
+					        ${comment.comment}
+					    </c:otherwise>
+					</c:choose>
 		       </div>
 		       </div>
 		       </c:forEach>

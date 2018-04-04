@@ -61,9 +61,16 @@ public class PostController {
 			post = postService.findById(id, false);
 
 		}
-	
-		
 		model.addAttribute("post", post);
+		
+		//check XSS prevention security setting
+		switch (securitySettings.getXssPrevention()) {
+			case True:
+				model.addAttribute("xssPrevention", "True");				
+				break;
+			default:
+				break;
+		}
 		
 		List<Comment> comments = commentService.findAllByPostId(id);
 		model.addAttribute("comments", comments);
