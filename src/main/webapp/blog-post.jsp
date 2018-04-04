@@ -28,30 +28,13 @@
 		         <c:out value="${post.content}"/>
 		       </div>
 		       <div class="row justify-content-start">
-		       <section class="comments col-md-8 ">
-		       
-		       <c:forEach items="${comments}" var="comment">
-		       
-		       <div class="comments-block">
-		    		 <p class="blog-comment-meta"><c:out value="${comment.createdAt}"/> by <c:out value="${comment.createdBy}"/></p>
-		    	   <div>
-		    	   		<c:choose>
-					    <c:when test="${xssPrevention != null}">
-					        <c:out value="${comment.comment}"/> 
-					    </c:when>    
-					    <c:otherwise>
-					        ${comment.comment}
-					    </c:otherwise>
-					</c:choose>
-		       </div>
-		       </div>
-		       </c:forEach>
+		       <section class="comments col-md-10 ">
 		       
 		       <div class="r"></div>
 
-				      <h5 class="mb-0">
-				        Leave your comment
-				      </h5>
+			   <h5 class="mb-0">
+				   Leave your comment
+			   </h5>
 
 		       <div class="card-body">
 			       <form action="post?id=${post.id}" method="post">
@@ -66,6 +49,22 @@
 			       <button type="submit" class="btn btn-primary">Submit</button>
 			       </form>
 			   </div>
+			   <br>
+			   <c:forEach items="${comments}" var="comment">
+			       <div class="comments-block">
+			    		 <p class="blog-comment-meta"><c:out value="${comment.createdAt}"/> by <strong><c:out value="${comment.createdBy}"/></strong></p>
+				    	   <div>
+				    	   		<c:choose>
+							    <c:when test="${xssPrevention != null}">
+							        <c:out value="${comment.comment}"/> 
+							    </c:when>    
+							    <c:otherwise>
+							        ${comment.comment}
+							    </c:otherwise>
+							</c:choose>
+				       </div>
+			       </div>
+		       </c:forEach>
 
 		       </section>
 		       </div>

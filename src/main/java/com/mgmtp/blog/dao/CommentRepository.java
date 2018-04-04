@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mgmtp.blog.model.Comment;
-import com.mgmtp.blog.model.Post;
 
 @Repository
 public class CommentRepository {
@@ -41,7 +40,7 @@ public class CommentRepository {
 
 	public boolean addComment(Comment comment) {
 		try {
-			jdbcTemplate.update("INSERT INTO Comments(created_at, created_by, comment, post_id) VALUES (NOW(),?,?,?)",
+			jdbcTemplate.update("INSERT INTO Comments(created_at, created_by, comment, post_id) VALUES (to_char(NOW(), 'DD Mon YYYY HH24:MI:SS'),?,?,?)",
 					comment.getCreatedBy(), comment.getComment(), comment.getPost().getId());
 		} catch (Exception e) {
 			e.printStackTrace();
