@@ -94,7 +94,7 @@ header {
 }
 .comments-block {
     margin-top: 10px;
-    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
     font-size: 0.75rem;
 }
 .r {
