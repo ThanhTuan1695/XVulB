@@ -24,7 +24,7 @@
 		       <div class="blog-post">
 		    		 <h2 class="blog-post-title"><c:out value="${post.title}"/></h2>
 		    		 <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
-		    		 <img class="blog-image" src="img/post-${post.id}.jpg" alt="" style="width: 100%;"/>
+		    		 <img src="img/post-${post.id}.jpg" alt="" style="width: 100%;"/>
 		    	   <div>
 		         ${post.content}
 		       </div>
