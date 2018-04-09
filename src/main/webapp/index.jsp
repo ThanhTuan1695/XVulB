@@ -35,11 +35,11 @@
 		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
 		      <div>
 		      <c:choose>
-    				<c:when test="${fn:length(post.content) gt 101}">
-		      		<c:out value="${post.content.substring(0,100)}"/>... 
+    				<c:when test="${fn:length(post.content) gt 201}">
+		      		${post.content.substring(0,200)}... <a href="post?id=${post.id}">Read more</a>
 		      	</c:when>
 		      	<c:otherwise>
-		      		<c:out value="${post.content}"/>
+		      		${post.content}
 		      	</c:otherwise>
 		      </c:choose>
 		      </div>

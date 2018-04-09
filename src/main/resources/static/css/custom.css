@@ -66,6 +66,9 @@ header {
   text-decoration:  none !important;
   color:            black !important;	
 }
+.blog-image {
+	width: 700px;
+}
 .title {
   text-decoration:  none !important;
   color:            black !important;	
