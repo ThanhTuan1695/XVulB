@@ -88,4 +88,21 @@ header {
 .panel {
 	margin-bottom: 50px;
 }
-
+.comments {
+	border-top: 1px solid #ccc;
+    margin-top: 20px;
+}
+.comments-block {
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    font-size: 0.75rem;
+}
+.r {
+    clear: both;
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 1px;
+    line-height: 1px;
+    font-size: 1px;
+}

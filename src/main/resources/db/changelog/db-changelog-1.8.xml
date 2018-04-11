@@ -1,0 +1,116 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="modify-datatype-post-content" author="anhquynhpham" >
+        <modifyDataType
+            columnName="content"
+            newDataType="text"
+            tableName="posts"/>
+    </changeSet> 
+    
+    <changeSet id="insert_data_to_blog" author="anhquynhpham">
+    		<sql dbms="postgresql"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[ insert into posts(title, created_day, content, user_id) values ('Top 3 Useful Mobile Phones', '2018-03-28','<p>What makes a mobile phone useful is directly proportional to the features it has and what it has to offer, in recent times, most technology have certain features that are related in a way. You can choose between new or refurbished mobiles. Mobile phone manufacturing companies want to satisfy the wants of their customers and they go an extra mile by putting in place, facilities that ensure smooth operation with zero lagging. We have so many phones that meet up to standard, but we are concentrating on the top five mobile phones that are highly useful for our day to day activities, these phones would be discussed as follows</p>
+					<h2>IPhone 7 Plus</h2>
+					<p>The iPhone 7 plus has a screen display resolution of about 1080 x 1920 pixels that enables the user to have clarity of colours and picture quality, it runs on an OS 10.0.1 and a quad core processor with speed up to 2.34 GHz which ensures a smooth operation. With a superb quality camera that has auto focus, face detection feature, and a standby battery of up to 384 h (3G).</p>
+					<h2>Samsung Galaxy S6</h2>
+					<p>This mobile phone is of high standard as the manufacturer ensured they put some features that makes it absolutely unique, with a good processor that ensures the phone has a good performance without lagging, the camera quality is of high standard with display resolution of up to 20mega pixels.</p>
+					<h2>Infinix Note 3</h2>
+					<p>The new design is a 4g LTE phone that has a finger print sensor which makes sure the phone is always secured at all times, with a new sleek premium metal body that makes the end user love the phone more and more, it is a 6.0 inch phone with full HD and a video dimension of (1080×1920 pixels) Display Screen [376 PPI], the 3gb ram allows the app to run smoothly, the memory slot is about 128 gigabytes. The battery capacity is about 4500 MAH making the phone last longer than other phone models, it is indeed a unique device which also has upload/download speed of up to about 50/150 respectively.</p>', 3); ]]>
+            <![CDATA[ insert into posts(title, created_day, content, user_id) values ('How to Make Your Workplace a Text-Free Zone', '2018-03-29', '<p>While employers try to make sure that their employees are continuously being watched, which happens to be an incredibly hard task unless they have only a handful of employees to look after. Most businesses work hard to make sure that the number of hours an employee puts into working for them add up with the quotient of their productivity that will ultimately increase their monthly turnover regularly. Unfortunately, with unlimited access to office internet and texting over the cellphone, it becomes quite hard to make employees concentrate on the work and pay no mind to petty distractions. Fortunately, we have a few ways for business owners to make sure that they are able to keep internet abuse at bay and make their workplace a text-free zone. Here is how it is going to work</p>
+					<h2>Keep an Eye on Text Logs via Spy Apps</h2>
+					<p>Spy applications are a great way to keep an eye on employee and their cellular activities. Not only does it provide you complete logs of every single text message sent and received by employees in a workplace, but they can also provide you with detailed records of such interactions that include the frequency of the texts being sent, to whom the text are being sent, etc. Additionally, you can also keep eye on emails sent by the employee and also keep an eye on the various messaging services like WhatsApp, Line and Viber being used by the employee. This way, employees can easily catch and expose employees that exchange text messages in a workplace and deal with them accordingly.</p>
+					<h2>Use Cell Block Services to Cut off Access to Cellular Network</h2>
+					<p>Some spy applications, like TheOneSpy, allow users to temporarily deactivate the target device’s access to cellular network. This way all incoming and outgoing interactions between your employees and others can be postponed for the time being, giving them to properly concentrate on their work in the absence of any sort of distractions provided by spy applications. Additionally, this can also let you employees know how serious you are with the whole no texting in the workplace thingy.</p>
+					<h2>Make Company Wi-Fi inaccessible on Cellular Devices</h2>
+					<p>Another way to cut off an employee’s interaction with others via text messaging is by making company Wi-Fi inaccessible to employee’s cellular devices. This way, once the employees cellular connectivity is cut off and he or she no longer has access to company’s Wi-Fi as well, the only thing left to do for them would be to actually do what they come to do their all along – work.</p>
+					<h2>Create Mobile Usage Policy</h2>
+					<p>Let’s go old school on this one. As you must know most schools frown upon the use of smartphones and other similar devices during school hours and if the student is caught using such a device, they get punished according to their the intensity of their discretion. They smartphones might be taken away or maybe they’d have to pay a fine for using it. As the business owner, you have as many rights as the captain of the ship at sea, you can employee such measures at your workplace too since you and no one would be able to tell you otherwise. This way you can not only control workplace tecting but also put an effective end to it eventually.</p>
+					<br>
+					<p>Angelica Dowson, a blogger by profession, an author significantly contributes towards mobile security, Monitoring Employee. If you want to know more about her you can follow her on twitter @angelicadowson2</p>', 4);]]>
+            <![CDATA[ insert into posts(title, created_day, content, user_id) values ('Arduino: The Hit Among Geeks and DIY Fans', '2018-04-1', '<h2>About Arduino</h2>
+					<p>Arduino is a programmable circuit board that has gained popularity among a wide range of users including programmers, scientists, designers, hobbyists, hardware hackers and engineers. It helps to add interactivity to objects and projects with electronics and programming. Arduino offers some unique benefits to the user. Let’s look at these benefits:</p>
+					
+					<h4>Why you should use Arduino</h4>
+					<p>The Arduino platform allows you to enjoy fast and easy prototyping. How amazing is it to be able to hook up an LCD and display text in a matter of minutes? Arduino has unparalleled ability to convert the ideas in your mind into some applicable projects. It is a convenient and reliable tool for passionate programmers and hobbyists to express their creativity through real outputs.</p>
+					
+					<p>Arduino also gives you control when you need to convert prototype into a real product. You can go deep into the microcontroller to eliminate any unwanted items and optimize code. It also provides a lot of pre-wiring and free code libraries for prototyping. It lets you to concentrate on testing your ideas instead of spending your precious time trying to build supporting circuitry and writing tons of low-level code. You are therefore able to develop essential skills without much difficulty using the least time possible.</p>
+					<h4>Resources for beginners to get started with Arduino</h4>
+					<p>Information about Arduino is ubiquitous in the internet, workplaces and programming books. As a beginner, you should try to pull off the following after getting started:</p>
+					
+					<ul>
+						<li>Understand an Arduino program</li>
+						<li>Be able to control Arduino outputs</li>
+						<li>Familiarize yourself with the Arduino Board</li>
+						<li>Learn how to communicate with your computer</li>
+					</ul>
+					<h4>Below are some of the mostly used resources to get started:</h4>
+					<ol>
+						<li>Instructables: This is a web-based documentation platform that documents completed projects and shows step-by-step guidelines on how to go about different kinds of projects. There is a lot of information about Arduino, the technology and other interesting topics for learners to get a broad look at Arduino.</li>
+						<li>Arduino Blog: All news related to Arduino, about the latest software and hardware that the Arduino team wants to share is provided in this blog. Interesting projects and other useful information is used to update the blog site and as a user you can ask any question about related topics through this blog.</li>
+						<li>MAKE: This is a hobbyist magazine that covers interesting Do-It-Yourself projects and more information about the technology. Arduino has a subsection in this magazine. You can get great inspirational information from this magazine by reading about the experiences of other successful programmers.</li>
+						<li>E-Radionica: E-radionica is a manufacturer and seller of a wide variety of all sorts of products where you can buy Arduino. There is a well maintained news feed section that introduces or shows off new products and kits. You also have access to quality videos that explain the products and kits and any events the team has led or attended.</li>
+						<li>YouTube: Instead of watching videos that do not add value to the viewer, type the word Arduino in the search box. You will be amazed at how many projects fellow users have shared. Use these videos to help you have a broader look at Arduino and what it yields.</li>
+						<li>Books: Arduino hard copy books and eBooks provide detailed information about the program and its applications. They can be of great help when you are seeking to have an in-depth understanding of Arduino. You can buy them online</li>
+					</ol>', 3);]]>
+            <![CDATA[ insert into posts(title, created_day, content, user_id) values ('7 Of The Best Outlets For Data Breach News', '2018-04-4', '<p>Staying up-to-date on the latest data breach news is something most security professionals want to do more of. These seven outlets make finding information on data breaches and analysis therein much easier. We’ve listed them below—take a look, and make sure you bookmark them for later reading!</p>
+						<h2>7 Of The Best Outlets For Data Breach News<h2>
+						<h4>#1: Dark Reading</h4>
+						<p>Dark Reading offers shorter-form content than, for example, Krebs on Security (#5) or Schneier on Security (#7)—but if you’re looking for incident overviews, Dark Reading is a great site to look at. It offers ten sections: Attacks & Breaches, Application Security, Cloud Security, Data Leaks & Insider Threats, Endpoint Security & Privacy, Mobile Security, Network & Perimeter Security, Risk Management & Compliance, Security Management & Analytics, and Vulnerabilities & Threats.</p>
+						<h4>#2: DataBreaches.net</h4>
+						<p>Like Dark Reading, DataBreaches.net posts short, informative incident overviews instead of lengthy content. You can also find quick links to a number of data breach laws. Interestingly, DataBreaches.net is not run by a security professional but by a healthcare professional who, according to their own statement, “is passionate about protecting privacy…[in] hope[s] that exposing the scope and seriousness of breaches—large and small—will help inform policymaking and decisions about allocating resources to data security.”</p>
+						<h4>#3 & #4: Identity Theft Resource Center & Privacy Rights Clearinghouse</h4>
+						<p>These are both aggregators for data breach news and notifications that come from different offices of state Attorneys General. These sites are good places to look if you want to see a ton of different breach reports. For example, if you want to search through Privacy Rights Clearinghouse for payment card fraud in 2016 and 2017, it will give you an overview of all incidents that were reported during that time.</p>
+						<h4>#5: Krebs On Security</h4>
+						<p>Security blogger Brian Krebs owns a blog called Krebs on Security. Krebs was a Washington Post reporter for over 10 years, and is an excellent writer. His posts are both interesting and detailed; while he covers all things cybersecurity, he hones in on critical security events and threats to networks. In late 2016, his website was hit with a major distributed denial-of-service (DDoS) attack—and he wrote a very interesting series attributing the people who attacked him and speculating on the reasons they brought his website down. He’s also not afraid to post a series of two or three blog posts over the span of a couple of months about a single topic. Because of his journalistic connections, he is contacted by people if they learn of a breach and has broken quite a few of those stories.</p>
+						<h4>#6: Naked Security</h4>
+						<p>Sophos’ cybersecurity blog, Naked Security, covers everything from unpatched vulnerabilities to actual data breaches that have occurred. It’s frequently used as a source of data breach news. Naked Security won the “Most Educational Blog” award at RSA 2017, which is a nice distinction.</p>
+						<h4>#7: Schneier On Security</h4>
+						<p>Bruce Schneier is the CEO of IBM Resilient, a threat intel group. The Economist called Schneier an “internet-security guru,” and he’s known for his technically sophisticated blog posts. Like Brian Krebs, Schneier has been blogging on cybersecurity for years and has a great deal of insider knowledge.</p>', 5);]]>
+            <![CDATA[ insert into posts(title, created_day, content, user_id) values ('Cybersecurity Compliance: Regulations For 7 Industry Sectors', '2018-04-09', '<p>Over the last 5-10 years, we’ve seen a major uptick in the number of regulations across all sectors regarding cybersecurity. The following is a brief look at how cybersecurity regulations have been implemented across seven sectors and divisions.</p>
+						<h2>Cybersecurity Compliance: Regulations For 7 Industry Sectors</h2>
+						<h4>Financial</h4>
+						<p>The financial sector has a number of cybersecurity requirements set by federal and state regulators. The most common set of requirements is found in the Federal Financial Institution Examination Council handbook, or FFIEC-IT. That body is comprised of a number of booklets that contain resources and requirements financial institutions are expected to adhere to. There are also a number of different guidances that financial regulatory bodies put out. An example is the Office of the Comptroller of Currency (OCC), which has put out guidance on third-party risk management. That guidance is issued to all organizations that fall under their oversight.</p>
+						<h4>Retail</h4>
+						<p>The retail sector isn’t federally regulated, but it does follow regulations from the Payment Card Industry Security Council’s Data Security Standard (or PCI DSS). This group issues security standards that any organization that processes payment cards or holds payment card data is required to follow.</p>
+						<h4>Healthcare</h4>
+						<p>The best-known standard for cybersecurity compliance healthcare is the Health Insurance Portability and Accountability Act. HIPAA establishes cybersecurity standards for healthcare organizations, insurers, and the third-party service providers medical organizations do business with.</p>
+						<h4>Defense</h4>
+						<p>As a condition of providing a service to the U.S. Department of Defense (DOD), businesses must meet cyber requirements set up in the Defense Federal Acquisition Regulation Supplement (DFARS) and Procedures, Guidance, and Information (PGI). DFARS outlines cybersecurity standards a third party must meet and comply with prior to doing business with the DOD in order to protect sensitive defense information.</p>
+						<h4>Consumer Data</h4>
+						<p>Currently, 47 out of 50 states (and the District of Columbia) have enacted cybersecurity compliance requirements for organizations to notify states about security breaches that compromise customer data. For instance, if your company holds sensitive personal information about customers—like social security numbers, account numbers, or payment card information—and you experience a breach, you’re obligated to notify those affected. The Federal Trade Commission (FTC) can also penalize organizations for failing to adequately protect consumer data.</p>
+						<h4>Insurance</h4>
+						<p>While regulations for insurance departments and companies vary state by state, many have issued requirements to protect consumer information. Furthermore, we’ve seen increased interest in adding more regulations in this area. In October 2016, the New York State Department of Financial Services (DFS) proposed new regulation around cybersecurity for both financial organizations and insurance companies.</p>
+						<h4>Energy</h4>
+						<p>The Federal Energy Regulatory Commission (FERC) has the authority to establish cybersecurity regulations over a number of electric utility companies and operators. The standards are created by a nonprofit authority known as the North American Electric Reliability Corporation (NERC), and the regulations are known as the Critical Infrastructure Protection (CIP) Standards.</p>
+						<h2>Something for all sectors to keep in mind...</h2>
+						<p>While cybersecurity compliance with regulations is a critical goal, ongoing management of cybersecurity—both your own and your vendors’—shouldn’t be understated. Protecting critical data and information is less about the label of compliance and more about creating and adhering to a cybersecurity program.</p>', 2);]]>
+        </sql>
+    </changeSet>
+    
+    <changeSet id="insert_data_to_comments" author="anhquynhpham">
+    		<sql dbms="postgresql"
+             splitStatements="true"
+             stripComments="true">
+            INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('Tina', '08 Apr 2018 15:45:00', 'I want to get top 10 smartphone in 2018. It is not up to date !!', 2);
+            INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('anonymous', '10 Apr 2018 20:11:25', 'I have had iphone X already ^o^', 2);
+        		INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('Bruce', '31 Mar 2018 15:19:25', 'It is a nice blog', 1);
+            INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('Marc', '11 Apr 2018 00:00:26', 'Thank you! It is helpful', 3);
+        		INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('Tony Stark', '09 Apr 2018 15:19:25', 'Sound good ~', 3);
+            INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('Pinky', '12 Apr 2018 15:22:15', 'Thanks a lot. I did not know about this before.', 4);
+            INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('Twinkle', '09 Apr 2018 07:29:15', 'WOW ~ It is pretty cool article', 5);
+            INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('anonymous', '09 Apr 2018 09:21:22', 'It is a lot helpful infor', 5);
+            INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('Pinky Boy', '13 Apr 2018 05:14:15', 'I knew it before. But it is more serious than I can imagine', 5);
+            INSERT INTO comments(created_by, created_at, comment, post_id) VALUES ('Tina', '10 Apr 2018 07:29:15', 'Cyber security is soooooooo important', 6);
+        </sql>
+    </changeSet>
+
+    <changeSet id="tag-1.0" author="anhquynhpham" >
+        <tagDatabase tag="1.0" />
+    </changeSet>
+
+</databaseChangeLog>

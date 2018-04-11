@@ -23,7 +23,7 @@ public class PostRepository {
     public List<Post> findAll() {
     		List<Post> result;
     		try {
-    			result = jdbcTemplate.query( "SELECT * FROM Posts",
+    			result = jdbcTemplate.query( "SELECT * FROM Posts ORDER BY id DESC;",
 						(rs, rowNum) -> new Post(rs.getLong("id"), 
 												rs.getString("title"), 
 												rs.getString("created_day"), 

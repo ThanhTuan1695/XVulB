@@ -13,7 +13,16 @@
           </h3>
 		  <c:if test="${searchquery != null}">
 		    <div class="alert alert-info" role="alert">
-		  		Searching result for <strong>${searchquery}</strong> 
+		    		Searching result for <strong>
+		    			<c:choose>
+					    <c:when test="${xssPrevention != null}">
+					        <c:out value="${searchquery}"/>
+					    </c:when>    
+					    <c:otherwise>
+					        ${searchquery}
+					    </c:otherwise>
+					</c:choose>
+		  		</strong> 
 			</div>	
 		  </c:if>   
 		  <c:forEach items="${posts}" var="post">
@@ -24,13 +33,13 @@
 		        </a>
 		      </h2>
 		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
-		      <div>
+		      <div style="text-align:  justify;">
 		      <c:choose>
-    				<c:when test="${fn:length(post.content) gt 101}">
-		      		<c:out value="${post.content.substring(0,100)}"/>... 
+    				<c:when test="${fn:length(post.content) gt 201}">
+		      		${post.content.substring(0,200)}... <a href="post?id=${post.id}">Read more</a>
 		      	</c:when>
 		      	<c:otherwise>
-		      		<c:out value="${post.content}"/>
+		      		${post.content}
 		      	</c:otherwise>
 		      </c:choose>
 		      </div>
@@ -44,17 +53,19 @@
         </div><!-- /.blog-main -->
 
         <aside class="col-md-4 blog-sidebar">
-          <div class="p-3 mb-3 bg-light rounded">
-            <h4 class="font-italic">About</h4>
-            <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+          <div class="p-3 mb-3 bg-light rounded" style="text-align:  justify;">
+            <h4 class="font-italic">About us</h4>
+            <p class="mb-0">We work in IT Security Department of mgm Technology Partners. If you have any questions, please contact us:</p>
+			<ul>
+					<li>Dennis.Stoetzel@mgm-sp.com-<em> Managing Principal IT Security Department</em> </li>
+			</ul>
           </div>
 
           <div class="p-3">
             <h4 class="font-italic">Archives</h4>
             <ol class="list-unstyled mb-0">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
+              <li><a href="#">April 2018</a></li>
+              <li><a href="#">March 2018</a></li>
             </ol>
           </div>
         </aside><!-- /.blog-sidebar -->

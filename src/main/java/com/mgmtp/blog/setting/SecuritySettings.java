@@ -16,6 +16,7 @@ public class SecuritySettings {
 	private PasswordStorage pwStorage;
 	private ResetPassword resetPassword;
 	private SetCookie setCookie;
+	private XSSPrevention xssPrevention;
 
 	public SqlInjection getSqlInjection() {
 		return sqlInjection;
@@ -63,6 +64,14 @@ public class SecuritySettings {
 
 	public void setSetCookie(SetCookie setCookie) {
 		this.setCookie = setCookie;
+	}
+
+	public XSSPrevention getXssPrevention() {
+		return xssPrevention;
+	}
+
+	public void setXssPrevention(XSSPrevention xssPrevention) {
+		this.xssPrevention = xssPrevention;
 	}
 	
 }
