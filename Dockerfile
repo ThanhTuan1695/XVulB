@@ -6,7 +6,7 @@ ADD pom.xml /usr/src/app/
 RUN mvn verify clean --fail-never
 
 ADD . /usr/src/app
-RUN mvn install
+RUN mvn install -Drun.jvmArguments="-Dspring.profiles.active=docker"
 
 
 FROM java:8
