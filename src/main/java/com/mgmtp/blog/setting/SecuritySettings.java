@@ -17,6 +17,7 @@ public class SecuritySettings {
 	private ResetPassword resetPassword;
 	private SetCookie setCookie;
 	private XSSPrevention xssPrevention;
+	private CSRFProtection csrfProtection;
 
 	public SqlInjection getSqlInjection() {
 		return sqlInjection;
@@ -72,6 +73,14 @@ public class SecuritySettings {
 
 	public void setXssPrevention(XSSPrevention xssPrevention) {
 		this.xssPrevention = xssPrevention;
+	}
+
+	public CSRFProtection getCsrfProtection() {
+		return csrfProtection;
+	}
+
+	public void setCsrfProtection(CSRFProtection csrfProtection) {
+		this.csrfProtection = csrfProtection;
 	}
 	
 }

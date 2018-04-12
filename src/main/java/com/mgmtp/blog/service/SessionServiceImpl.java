@@ -2,8 +2,9 @@ package com.mgmtp.blog.service;
 
 import com.mgmtp.blog.dao.SessionRepository;
 import com.mgmtp.blog.model.Session;
+import com.mgmtp.blog.setting.SecuritySettings;
+
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -22,7 +23,10 @@ public class SessionServiceImpl implements SessionService {
 
     @Autowired
     private SessionRepository sessionRepository;
-
+    
+    @Autowired
+	SecuritySettings securitySettings;
+    
     @Override
 	public List<Session> findByUsername(String username) {
 		return sessionRepository.findByUsername(username);
@@ -44,7 +48,17 @@ public class SessionServiceImpl implements SessionService {
     
 	@Override
 	public void addSession(String username, String sessionid) {
-		sessionRepository.addSession(username, sessionid);
+		String csrfToken = "";
+		switch (securitySettings.getCsrfProtection()) {
+			case Token:
+			case Both:
+				csrfToken = getRandomSessionId();
+				break;
+			default:
+				//do nothing
+				break;
+		}
+		sessionRepository.addSession(username, sessionid, csrfToken);
 	}
 
 	@Override

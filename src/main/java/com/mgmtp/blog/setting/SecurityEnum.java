@@ -14,7 +14,9 @@ public class SecurityEnum {
 	
 	public static enum SetCookie { True, False };
 	
-	public static enum XSSPrevention {True, False};
+	public static enum XSSPrevention { True, False };
+	
+	public static enum CSRFProtection { Token, Samesite, Both, False };
 	
 }
 

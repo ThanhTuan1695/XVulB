@@ -15,7 +15,7 @@ public class SessionRepository {
 	public List<Session> findByUsername(String username) {
 		try {
 			List<Session> result = jdbcTemplate.query("SELECT * FROM Sessions WHERE username=?",
-					(rs, rowNum) -> new Session(rs.getString("username"), rs.getString("sessionid")), username);
+					(rs, rowNum) -> new Session(rs.getString("username"), rs.getString("sessionid"), rs.getString("token")), username);
 			return result;
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -26,7 +26,7 @@ public class SessionRepository {
 	public List<Session> findBySessionId(String sessionid) {
 		try {
 			List<Session> result = jdbcTemplate.query("SELECT * FROM Sessions WHERE sessionid=? AND NOW() < expiretime",
-					(rs, rowNum) -> new Session(rs.getString("username"), rs.getString("sessionid")), sessionid);
+					(rs, rowNum) -> new Session(rs.getString("username"), rs.getString("sessionid"), rs.getString("token")), sessionid);
 			return result;
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -45,10 +45,10 @@ public class SessionRepository {
 
 
 	// Add new session
-	public void addSession(String username, String sessionid) {
+	public void addSession(String username, String sessionid, String csrfToken) {
 		try {
-			jdbcTemplate.update("INSERT INTO sessions(username, sessionid, expiretime) VALUES (?,?, NOW()+time'00:30')", username,
-					sessionid);
+			jdbcTemplate.update("INSERT INTO sessions(username, sessionid, token, expiretime) VALUES (?,?, ?, NOW()+time'00:30')", 
+					username, sessionid, csrfToken);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

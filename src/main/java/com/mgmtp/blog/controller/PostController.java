@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod; 
 
 import com.mgmtp.blog.model.Comment;
 import com.mgmtp.blog.model.Post;
@@ -86,27 +85,45 @@ public class PostController {
 	@RequestMapping(value = "/new-post", method = { RequestMethod.GET, RequestMethod.POST } )
 	public String addNewPost(HttpServletRequest request, 
 			HttpServletResponse response, Model model) {
-		String postTitle = request.getParameter("post-title"); 
-		String postContent = request.getParameter("post-content"); 
-		Cookie loginCookie = sessionService.checkLoginCookie(request);
-		List<Session> sessions;
-		if (loginCookie != null) {
-			sessions = sessionService.checkSessionId(loginCookie.getValue());
-    			if (!sessions.isEmpty()) {
-    				List<User> users = userService.findByUsername(sessions.get(0).getUsername());
-    				Post post = new Post(postTitle, postContent, users.get(0));
-    				if(postService.addPost(post)) {
-    					model.addAttribute("isSuccess", true);
-    				}
-    				else {
-    					model.addAttribute("isSuccess", false);
-    				}
-	    	        return "redirect:/home";
-    			}
+		try {
+			String postTitle = request.getParameter("post-title"); 
+			String postContent = request.getParameter("post-content"); 
+			
+			Cookie loginCookie = sessionService.checkLoginCookie(request);
+			List<Session> sessions = loginCookie != null ? sessionService.checkSessionId(loginCookie.getValue()) : null;
+			if (loginCookie == null || sessions.isEmpty()) {
+				return "redirect:/";
+			}
+			
+			switch (securitySettings.getCsrfProtection()) {
+				case Token:
+				case Both:
+					String csrfToken = !request.getParameter("csrfToken").isEmpty() ? request.getParameter("csrfToken") : "";
+					System.out.println(sessions.get(0).getCsrfToken() + " " + csrfToken);
+					if(!sessions.get(0).getCsrfToken().equals(csrfToken)) {
+						System.out.println("WHYYYYYYYYYY");
+						model.addAttribute("isSuccess", false);
+						return "redirect:/";
+					}
+					break;
+				default:
+					//do nothing
+					break;
+			}
+			
+	    		List<User> users = userService.findByUsername(sessions.get(0).getUsername());
+	    		Post post = new Post(postTitle, postContent, users.get(0));
+	    		if(postService.addPost(post)) {
+	    			model.addAttribute("isSuccess", true);
+	    		}
+	    		else {
+	    			model.addAttribute("isSuccess", false);
+	    		}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return "redirect:/";
-	
-
+		
+	    	return "redirect:/home";
 	}
 	
 	@RequestMapping(value = "/post", params = "id", method = RequestMethod.POST)

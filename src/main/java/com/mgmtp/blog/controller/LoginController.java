@@ -108,6 +108,9 @@ public class LoginController {
     			if (!sessions.isEmpty()) {
     				model.addAttribute("pwstorage", securitySettings.getPwStorage());
     				model.addAttribute("username", sessions.get(0).getUsername());	
+    				if(!sessions.get(0).getCsrfToken().isEmpty()) {
+    					model.addAttribute("csrfToken", sessions.get(0).getCsrfToken());	
+    				}
 	    			List<User> users = (List<User>) userService.findAll();
 	    			model.addAttribute("users", users);
 	    	        return "home";
@@ -198,16 +201,25 @@ public class LoginController {
 				break;
 		}
 		
-		Cookie loginCookie = new Cookie("SESSIONID", sessionid);
+		String cookie = "SESSIONID = "+sessionid;
 		switch (securitySettings.getSetCookie()) {
 			case True:
-				loginCookie.setHttpOnly(true);
+				cookie += "; HttpOnly";
 				break;
 			case False:
 				//do nothing
 				break;
 		}
-		response.addCookie(loginCookie);
+		switch (securitySettings.getCsrfProtection()) {
+			case Samesite:
+			case Both:
+				cookie += "; SameSite=strict";
+				break;
+			default:
+				//do nothing
+				break;
+		}
+		response.setHeader("Set-Cookie", cookie);
 		sessionService.addSession(username, sessionid);
 	}
 	

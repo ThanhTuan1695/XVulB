@@ -43,7 +43,9 @@
 	    </div>
 	       <div class="card-body">
 	       <form action="/new-post" method="post">
-	          <input type="hidden" name="username" value="${username}">
+	          <c:if test="${csrfToken != null}">
+	          	<input type="hidden" name="csrfToken" value="${csrfToken}">
+	          </c:if>
 			  <div class="form-group">
 			    <label for="post-title">Title</label>
 			    <input type="text" class="form-control" name="post-title" id="post-title" placeholder="post title">

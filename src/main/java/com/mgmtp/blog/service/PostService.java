@@ -5,9 +5,6 @@ import com.mgmtp.blog.model.Post;
 
 import java.util.List;
 
-
-import java.util.List;
-
 public interface PostService {
 	
 	List<PostDTO> findAll();
