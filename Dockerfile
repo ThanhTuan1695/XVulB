@@ -9,6 +9,6 @@ ADD . /usr/src/app
 RUN mvn install
 
 
-FROM java:8
-COPY --from=maven /usr/src/app/target/XVulB-*.jar /opt/app.jar
-CMD ["java","-jar","-Dspring.profiles.active=docker","/opt/app.jar"]
+FROM tomcat:9-jre8
+ENV JAVA_OPTS -Dspring.profiles.active=docker
+COPY --from=maven /usr/src/app/target/XVulB-*.war /usr/local/tomcat/webapps/ROOT.war
