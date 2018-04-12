@@ -5,8 +5,8 @@
 
 	<groupId>com.mgm-tp</groupId>
 	<artifactId>XVulB</artifactId>
-	<version>0.2-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<version>0.3-SNAPSHOT</version>
+	<packaging>war</packaging>
 
 	<name>XVulB</name>
 	<description>eXtremely Vulnerable Blog</description>
@@ -44,8 +44,7 @@
 		<dependency>
 		    <groupId>javax.servlet</groupId>
 		    <artifactId>jstl</artifactId>
-		</dependency>
-		
+		</dependency>		
 	
 		<dependency>
             <groupId>org.postgresql</groupId>
