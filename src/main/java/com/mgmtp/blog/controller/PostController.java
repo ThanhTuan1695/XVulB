@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mgmtp.blog.model.Comment;
 import com.mgmtp.blog.model.Post;
@@ -82,8 +83,8 @@ public class PostController {
 		return "blog-post";
 	}
 	
-	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	public String showHomePage(HttpServletRequest request, 
+	@RequestMapping(value = "/new-post", method = { RequestMethod.GET, RequestMethod.POST } )
+	public String addNewPost(HttpServletRequest request, 
 			HttpServletResponse response, Model model) {
 		String postTitle = request.getParameter("post-title"); 
 		String postContent = request.getParameter("post-content"); 

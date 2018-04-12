@@ -42,7 +42,7 @@
 	      </h5>
 	    </div>
 	       <div class="card-body">
-	       <form action="/post" method="post">
+	       <form action="/new-post" method="post">
 	          <input type="hidden" name="username" value="${username}">
 			  <div class="form-group">
 			    <label for="post-title">Title</label>

@@ -114,7 +114,7 @@ public class PostRepository {
 
     public boolean addPost(Post post) {
     		try {
-    			jdbcTemplate.update("INSERT INTO Posts(title, created_day, content, user_id) VALUES (?,NOW(),?,?)",
+    			jdbcTemplate.update("INSERT INTO Posts(title, created_day, content, user_id) VALUES (?,to_char( now(), 'YYYY-MM-DD'),?,?)",
     	                 post.getTitle(), post.getContent(), post.getUser().getId());
     		} catch (Exception e) {
     			e.printStackTrace();
