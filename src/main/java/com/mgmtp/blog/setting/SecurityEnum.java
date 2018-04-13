@@ -18,6 +18,10 @@ public class SecurityEnum {
 	
 	public static enum CSRFProtection { Token, Samesite, Both, False };
 	
+	public static enum HorizontalEscalation { True, False };
+	
+	public static enum VerticalEscalation { True, False };
+	
 }
 
 

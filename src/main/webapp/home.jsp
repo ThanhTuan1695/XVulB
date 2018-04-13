@@ -43,6 +43,7 @@
 	    </div>
 	       <div class="card-body">
 	       <form action="/new-post" method="post">
+	       	  <input type="hidden" name="username" value="${username}">
 	          <c:if test="${csrfToken != null}">
 	          	<input type="hidden" name="csrfToken" value="${csrfToken}">
 	          </c:if>

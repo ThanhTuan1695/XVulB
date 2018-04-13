@@ -52,13 +52,15 @@ public class PostController {
 
 		PostDTO post;
 
-		// check sql injection security setting
+		// check SQL injection security setting
 		switch (securitySettings.getSqlInjection()) {
-		case True:
-			post = postService.findById(id, true);
-			break;
-		default:
-			post = postService.findById(id, false);
+		
+			case True:
+				post = postService.findById(id, true);
+				break;
+				
+			default:
+				post = postService.findById(id, false);
 
 		}
 		model.addAttribute("post", post);
@@ -89,29 +91,39 @@ public class PostController {
 			String postTitle = request.getParameter("post-title"); 
 			String postContent = request.getParameter("post-content"); 
 			
-			Cookie loginCookie = sessionService.checkLoginCookie(request);
-			List<Session> sessions = loginCookie != null ? sessionService.checkSessionId(loginCookie.getValue()) : null;
-			if (loginCookie == null || sessions.isEmpty()) {
-				return "redirect:/";
-			}
+			List<User> users;
+			switch (securitySettings.getVerticalEscalation()) {
 			
-			switch (securitySettings.getCsrfProtection()) {
-				case Token:
-				case Both:
-					String csrfToken = !request.getParameter("csrfToken").isEmpty() ? request.getParameter("csrfToken") : "";
-					System.out.println(sessions.get(0).getCsrfToken() + " " + csrfToken);
-					if(!sessions.get(0).getCsrfToken().equals(csrfToken)) {
-						System.out.println("WHYYYYYYYYYY");
-						model.addAttribute("isSuccess", false);
+				case True:
+					Cookie loginCookie = sessionService.checkLoginCookie(request);
+					List<Session> sessions = loginCookie != null ? sessionService.checkSessionId(loginCookie.getValue()) : null;
+					if (loginCookie == null || sessions.isEmpty()) {
 						return "redirect:/";
 					}
+					
+					switch (securitySettings.getCsrfProtection()) {
+						case Token:
+						case Both:
+							String csrfToken = !request.getParameter("csrfToken").isEmpty() ? request.getParameter("csrfToken") : "";
+							if(!sessions.get(0).getCsrfToken().equals(csrfToken)) {
+								model.addAttribute("isSuccess", false);
+								return "redirect:/";
+							}
+							break;
+						default:
+							//do nothing
+							break;
+					}
+					
+					users = userService.findByUsername(sessions.get(0).getUsername());
 					break;
+					
 				default:
-					//do nothing
+					String username = request.getParameter("username"); 
+					users = userService.findByUsername(username);
 					break;
 			}
 			
-	    		List<User> users = userService.findByUsername(sessions.get(0).getUsername());
 	    		Post post = new Post(postTitle, postContent, users.get(0));
 	    		if(postService.addPost(post)) {
 	    			model.addAttribute("isSuccess", true);
@@ -119,10 +131,10 @@ public class PostController {
 	    		else {
 	    			model.addAttribute("isSuccess", false);
 	    		}
+	    		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	    	return "redirect:/home";
 	}
 	
@@ -132,11 +144,15 @@ public class PostController {
 		String id = request.getParameter("id"); 
 		String comment = request.getParameter("comment"); 
 		String author = request.getParameter("author"); 
+		
 		if(comment.isEmpty() || author.isEmpty()) 
 			return "redirect:/post?id="+id;
+		
 		Post post = postService.findById(id);
+		
 		Comment c = new Comment(author, comment, post);
 		commentService.addComment(c);
+		
 		return "redirect:/post?id="+id;
 	
 

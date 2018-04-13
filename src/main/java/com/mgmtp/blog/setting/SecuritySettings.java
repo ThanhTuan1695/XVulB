@@ -18,7 +18,9 @@ public class SecuritySettings {
 	private SetCookie setCookie;
 	private XSSPrevention xssPrevention;
 	private CSRFProtection csrfProtection;
-
+	private HorizontalEscalation horizontalEscalation; 
+	private VerticalEscalation verticalEscalation; 
+	
 	public SqlInjection getSqlInjection() {
 		return sqlInjection;
 	}
@@ -81,6 +83,22 @@ public class SecuritySettings {
 
 	public void setCsrfProtection(CSRFProtection csrfProtection) {
 		this.csrfProtection = csrfProtection;
+	}
+
+	public HorizontalEscalation getHorizontalEscalation() {
+		return horizontalEscalation;
+	}
+
+	public void setHorizontalEscalation(HorizontalEscalation horizontalEscalation) {
+		this.horizontalEscalation = horizontalEscalation;
+	}
+
+	public VerticalEscalation getVerticalEscalation() {
+		return verticalEscalation;
+	}
+
+	public void setVerticalEscalation(VerticalEscalation verticalEscalation) {
+		this.verticalEscalation = verticalEscalation;
 	}
 	
 }
