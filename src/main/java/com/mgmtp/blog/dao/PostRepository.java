@@ -42,14 +42,20 @@ public class PostRepository {
     		List<Post> result;
     		try {
 
-				if(safe) {				
+				if(safe) {
+					int param;
+					try {
+						param = Integer.valueOf(id);
+					} catch (Exception ignore) {
+						param = 0;		
+					}		
 					//safe query
 					result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = ?", 
 													(rs, rowNum) -> new Post(rs.getLong("id"), 
 																			rs.getString("title"), 
 																			rs.getString("created_day"), 
 																			rs.getString("content"), 
-																			userRepository.findById(rs.getLong("user_id")).get(0)), id
+																			userRepository.findById(rs.getLong("user_id")).get(0)), param
 							
 													);
 				}
