@@ -5,8 +5,8 @@
 
 	<groupId>com.mgm-tp</groupId>
 	<artifactId>XVulB</artifactId>
-	<version>0.2</version>
-	<packaging>war</packaging>
+	<version>0.3</version>
+	<packaging>jar</packaging>
 
 	<name>XVulB</name>
 	<description>eXtremely Vulnerable Blog</description>
@@ -76,6 +76,11 @@
 		<dependency>
 		    <groupId>commons-codec</groupId>
 		    <artifactId>commons-codec</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
 		</dependency>
 	</dependencies>
 

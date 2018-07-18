@@ -29,7 +29,7 @@
 		    <div class="blog-post">
 		      <h2 class="blog-post-title">
 		        <a class="title" href="post?id=${post.id}" >
-		          <c:out value="${post.title}"/>
+		          <c:out value="#${post.id} - ${post.title}"/>
 		        </a>
 		      </h2>
 		      <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>

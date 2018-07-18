@@ -50,18 +50,18 @@ public class PostController {
 		if (id.length() == 0)
 			return "redirect:/";
 
-		PostDTO post;
+		List<PostDTO> posts;
 
 		// check sql injection security setting
 		switch (securitySettings.getSqlInjection()) {
 		case True:
-			post = postService.findById(id, true);
+			posts = postService.findById(id, true);
 			break;
 		default:
-			post = postService.findById(id, false);
+			posts = postService.findById(id, false);
 
 		}
-		model.addAttribute("post", post);
+		model.addAttribute("posts", posts);
 		
 		//check XSS prevention security setting
 		switch (securitySettings.getXssPrevention()) {

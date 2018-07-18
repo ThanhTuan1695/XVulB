@@ -13,16 +13,16 @@
           
           
 		<c:choose>
-		    <c:when test="${post == null}">
+		    <c:when test="${posts == null}">
 		        <div class="alert alert-danger" role="alert">
   					Post is not found 
 		  		</div>	
 		    </c:when>    
 		    <c:otherwise>
 
-		    
+					<c:forEach items="${posts}" var="post">
 		       <div class="blog-post">
-		    		 <h2 class="blog-post-title"><c:out value="${post.title}"/></h2>
+		    		 <h2 class="blog-post-title"><c:out value="#${post.id} - ${post.title}"/></h2>
 		    		 <p class="blog-post-meta"><c:out value="${post.createdDay}"/> by <a href="#"><c:out value="${post.createdBy}"/></a></p>
 		    		 <img src="img/post-${post.id}.jpg" alt="" style="width: 100%;"/>
 		    	   <div style="text-align:  justify;">
@@ -69,7 +69,8 @@
 
 		       </section>
 		       </div>
-		  </div>
+					</div>
+					</c:forEach>
 	
 
 		 </c:otherwise>

@@ -40,38 +40,38 @@ public class PostRepository {
     
     public List<Post> findById(String id, boolean safe) {
     		List<Post> result;
-    		
-    		if(safe) {
-    			int param;
-        		try {
-        			param = Integer.valueOf(id);
-        		} catch (Exception ignore) {
-        			param = 0;
-        			
-        		}
-        		//safe query
-    			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = ?", 
-	    										   (rs, rowNum) -> new Post(rs.getLong("id"), 
-																		rs.getString("title"), 
-																		rs.getString("created_day"), 
-																		rs.getString("content"), 
-																		userRepository.findById(rs.getLong("user_id")).get(0)), param
-	                    
-	    										 );
-    		}
-    		
-    		else {
-    			//unsafe query
-    			result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = " + id, 
-						   (rs, rowNum) -> new Post(rs.getLong("id"), 
-												rs.getString("title"), 
-												rs.getString("created_day"), 
-												rs.getString("content"), 
-												userRepository.findById(rs.getLong("user_id")).get(0))
+    		try {
 
-						 );
-    				
-    		}
+				if(safe) {				
+					//safe query
+					result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = ?", 
+													(rs, rowNum) -> new Post(rs.getLong("id"), 
+																			rs.getString("title"), 
+																			rs.getString("created_day"), 
+																			rs.getString("content"), 
+																			userRepository.findById(rs.getLong("user_id")).get(0)), id
+							
+													);
+				}
+				
+				else {
+					//unsafe query
+					
+						result = jdbcTemplate.query( "SELECT * FROM Posts WHERE id = " + id, 
+							(rs, rowNum) -> new Post(rs.getLong("id"), 
+													rs.getString("title"), 
+													rs.getString("created_day"), 
+													rs.getString("content"), 
+													userRepository.findById(rs.getLong("user_id")).get(0))
+
+						);
+					
+					
+						
+				}
+			} catch (Exception ignore) {
+					return new ArrayList<Post>();
+				}
 	    return result;
 	
 	}
