@@ -6,7 +6,7 @@
 	<groupId>com.mgm-tp</groupId>
 	<artifactId>XVulB</artifactId>
 	<version>0.3</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>XVulB</name>
 	<description>eXtremely Vulnerable Blog</description>
